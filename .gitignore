@@ -1,0 +1,16 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local scratch
+*.tmp

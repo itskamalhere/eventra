@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventra India — Discover. Book. Experience.</title>
+  <meta name="description" content="India's premier cultural & tech event discovery platform. Book curated passes for classical fusion concerts, frontier AI summits, contemporary art biennales, royal culinary feasts, and Himalayan endurance sports across Bengaluru, Mumbai, Delhi NCR, Jaipur, and Goa.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- SVG Icon Sprite Definitions -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </symbol>
+      <symbol id="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </symbol>
+      <symbol id="icon-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7v2a3 3 0 0 0 6 0v-2"></path>
+        <path d="M21 7v2a3 3 0 0 1-6 0v-2"></path>
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <line x1="10" y1="12" x2="14" y2="12"></line>
+      </symbol>
+      <symbol id="icon-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </symbol>
+      <symbol id="icon-bookmark-filled" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </symbol>
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </symbol>
+      <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </symbol>
+      <symbol id="icon-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+      </symbol>
+      <symbol id="icon-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </symbol>
+      <symbol id="icon-sparkle" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2L14.39 8.26L21 9.27L16.2 13.97L17.5 20.6L12 17.27L6.5 20.6L7.8 13.97L3 9.27L9.61 8.26L12 2Z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Top Live Notice & India Season Bar -->
+  <aside class="notice-bar" aria-label="India Cultural Season Notice">
+    <div class="notice-content">
+      <span class="notice-badge">BHARAT 2026–2027 EDITION</span>
+      <span class="notice-text">
+        Experience curated live culture across Bengaluru, Mumbai, Delhi NCR, Jaipur, Goa, and Kochi. All ticketing is simulated for portfolio demonstration.
+      </span>
+      <div class="notice-countdown" id="topMarqueeCountdown">
+        <span class="countdown-label">Next Marquee Live in:</span>
+        <span class="countdown-val" id="countdownTimerVal">19d 14h 22m</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Primary Site Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner container">
+      <!-- Brand Logo -->
+      <a href="#discover" class="brand-logo" aria-label="Eventra India Home">
+        <svg class="logo-mark" viewBox="0 0 36 36" width="34" height="34" aria-hidden="true">
+          <rect width="36" height="36" rx="9" fill="#111D2E"/>
+          <path d="M12 10.5h12c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-9v4.5h7.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5H15v4.5h9c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5H12c-.8 0-1.5-.7-1.5-1.5v-15c0-.8.7-1.5 1.5-1.5z" fill="#FFFFFF"/>
+          <circle cx="27" cy="10" r="2.5" fill="#FF8C38"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">EVENTRA</span>
+          <span class="brand-sub">India Curation</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li>
+            <a href="#discover" class="nav-link active" data-nav="discover">
+              <span>Discover</span>
+            </a>
+          </li>
+          <li>
+            <a href="#explore" class="nav-link" data-nav="explore">
+              <span>Explore Events</span>
+            </a>
+          </li>
+          <li>
+            <a href="#saved" class="nav-link" data-nav="saved">
+              <span>Saved Wishlist</span>
+              <span class="nav-badge" id="savedCountBadge" style="display: none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="#my-tickets" class="nav-link" data-nav="my-tickets">
+              <span>My Passes</span>
+              <span class="nav-badge badge-accent" id="ticketsCountBadge" style="display: none;">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Header Action & Theme Switcher -->
+      <div class="header-actions">
+        <!-- Theme Switcher (Day Sandalwood / Night Silk) -->
+        <button type="button" class="btn-theme-toggle" id="themeToggleBtn" aria-label="Toggle between Royal Ivory and Midnight Silk themes" title="Toggle theme">
+          <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#icon-sun"/></svg>
+          <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#icon-moon"/></svg>
+        </button>
+
+        <button type="button" class="btn btn-primary btn-sm" id="headerBrowseBtn">
+          <span>Explore All</span>
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button type="button" class="mobile-toggle" id="mobileMenuToggle" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Toggle Navigation Menu">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <span class="brand-name">EVENTRA INDIA</span>
+          <span class="brand-sub">Navigation</span>
+        </div>
+        <button type="button" class="btn-close" id="drawerCloseBtn" aria-label="Close menu">
+          <svg class="icon"><use href="#icon-close"/></svg>
+        </button>
+      </div>
+
+      <nav class="drawer-nav">
+        <a href="#discover" class="drawer-link active" data-nav="discover">
+          <span class="drawer-link-title">Discover</span>
+          <span class="drawer-link-sub">Curated Indian experiences</span>
+        </a>
+        <a href="#explore" class="drawer-link" data-nav="explore">
+          <span class="drawer-link-title">Explore Events</span>
+          <span class="drawer-link-sub">Bengaluru, Mumbai, Delhi, Jaipur & Goa</span>
+        </a>
+        <a href="#saved" class="drawer-link" data-nav="saved">
+          <div class="drawer-link-with-badge">
+            <span class="drawer-link-title">Saved Wishlist</span>
+            <span class="nav-badge" id="mobileSavedBadge">0</span>
+          </div>
+          <span class="drawer-link-sub">Your bookmarked experiences</span>
+        </a>
+        <a href="#my-tickets" class="drawer-link" data-nav="my-tickets">
+          <div class="drawer-link-with-badge">
+            <span class="drawer-link-title">My Digital Passes</span>
+            <span class="nav-badge badge-accent" id="mobileTicketsBadge">0</span>
+          </div>
+          <span class="drawer-link-sub">Confirmed digital admission passes</span>
+        </a>
+      </nav>
+
+      <div class="drawer-footer">
+        <button type="button" class="btn btn-primary btn-block" id="mobileExploreCta">
+          <span>Browse All 14+ Experiences</span>
+        </button>
+        <p class="drawer-note">Eventra India v3.0 • Built with Pure Vanilla Web Tech</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main id="mainContent">
+    <!-- SECTION 1: CINEMATIC INDIAN PHOTOGRAPHIC HERO -->
+    <section class="hero-section" id="discover">
+      <!-- Authentic Indian Festival Atmosphere Background -->
+      <div class="hero-bg-media">
+        <img src="assets/images/hero-india-festival.jpg" alt="Massive Indian live music concert crowd celebrating under golden stage lights" class="hero-bg-img" fetchpriority="high">
+        <div class="hero-bg-overlay"></div>
+      </div>
+
+      <div class="container hero-grid">
+        <!-- Hero Editorial Text -->
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>INDIA'S PREMIER CULTURAL & TECH ARCHIVE</span>
+          </div>
+          <h1 class="hero-headline">
+            Experience India's most <span class="text-serif text-italic">extraordinary</span> gatherings.
+          </h1>
+          <p class="hero-lead">
+            From classical fusion sitar sets at NCPA and deep-tech frontier AI summits in Bengaluru, to royal Awadhi feasts in Hyderabad and the Kochi Biennale. Thoughtfully curated for discerning attendees.
+          </p>
+
+          <!-- Quick Discovery Bar -->
+          <div class="discovery-bar" role="search" aria-label="Indian event search and discovery filters">
+            <div class="discovery-field field-search">
+              <label for="heroSearchInput" class="field-label">Search</label>
+              <div class="field-input-wrap">
+                <svg class="icon field-icon" aria-hidden="true"><use href="#icon-search"/></svg>
+                <input type="text" id="heroSearchInput" placeholder="Artist, NCPA, Bengaluru AI, Kochi..." autocomplete="off">
+              </div>
+            </div>
+
+            <div class="discovery-divider"></div>
+
+            <div class="discovery-field field-city">
+              <label for="heroCitySelect" class="field-label">City Hub</label>
+              <div class="field-input-wrap">
+                <svg class="icon field-icon" aria-hidden="true"><use href="#icon-pin"/></svg>
+                <select id="heroCitySelect">
+                  <option value="">All Indian Hubs</option>
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Delhi NCR">Delhi NCR</option>
+                  <option value="Jaipur">Jaipur</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Kochi">Kochi</option>
+                  <option value="Kolkata">Kolkata</option>
+                  <option value="Varanasi">Varanasi</option>
+                  <option value="Rishikesh">Rishikesh</option>
+                  <option value="Ladakh">Ladakh</option>
+                </select>
+                <svg class="icon field-chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+              </div>
+            </div>
+
+            <div class="discovery-divider"></div>
+
+            <div class="discovery-field field-date">
+              <label for="heroDateSelect" class="field-label">Season / Date</label>
+              <div class="field-input-wrap">
+                <svg class="icon field-icon" aria-hidden="true"><use href="#icon-calendar"/></svg>
+                <select id="heroDateSelect">
+                  <option value="">Any Time</option>
+                  <option value="weekend">This Weekend</option>
+                  <option value="winter">Winter Season (Nov - Dec 2026)</option>
+                  <option value="spring">Spring Festivals (Jan - Feb 2027)</option>
+                  <option value="summer">Summer / High Passes (Mar - May 2027)</option>
+                </select>
+                <svg class="icon field-chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary discovery-submit" id="heroSearchSubmit" aria-label="Find matching Indian events">
+              <span>Find Events</span>
+              <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+            </button>
+          </div>
+
+          <!-- Quick Stat Counters -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-num">14+</span>
+              <span class="stat-label">Curated Events</span>
+            </div>
+            <div class="stat-sep">/</div>
+            <div class="stat-item">
+              <span class="stat-num">10</span>
+              <span class="stat-label">Major Indian Hubs</span>
+            </div>
+            <div class="stat-sep">/</div>
+            <div class="stat-item">
+              <span class="stat-num">100%</span>
+              <span class="stat-label">Instant Digital Passes (₹)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Featured Spotlight Card -->
+        <div class="hero-spotlight">
+          <div class="spotlight-card" id="heroSpotlightCard">
+            <div class="spotlight-card-inner">
+              <div class="spotlight-badge">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-sparkle"/></svg>
+                <span>CURATOR'S SPOTLIGHT</span>
+              </div>
+              <div class="spotlight-poster-wrap" id="heroSpotlightArtwork">
+                <!-- Rendered dynamically via JS -->
+              </div>
+              <div class="spotlight-details">
+                <div class="spotlight-meta">
+                  <span class="spotlight-category" id="heroSpotlightCategory">Music & Concerts</span>
+                  <span class="spotlight-city" id="heroSpotlightCity">NCPA, Mumbai</span>
+                </div>
+                <h3 class="spotlight-title" id="heroSpotlightTitle">Ragas & Resonances: Classical Sitar Meets Modular Synthesis</h3>
+                <div class="spotlight-footer">
+                  <div class="spotlight-price">
+                    <span class="price-prefix">Passes From</span>
+                    <span class="price-val" id="heroSpotlightPrice">₹1,499</span>
+                  </div>
+                  <div class="spotlight-actions">
+                    <button type="button" class="btn btn-sm btn-outline" id="heroSpotlightDetailsBtn">
+                      <span>View Details</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary" id="heroSpotlightBookBtn">
+                      <span>Book Pass</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: INDIAN PHOTOGRAPHIC CATEGORY MOSAIC -->
+    <section class="categories-section" id="categoriesSection">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <span class="section-eyebrow">EXPLORE BY DISCIPLINE</span>
+            <h2 class="section-title">Curated Indian Cultural Passions</h2>
+          </div>
+          <p class="section-desc">Handcrafted experiences celebrating modern electronic and classical sangeet, deep-tech AI hubs, contemporary biennales, royal Awadhi culinary traditions, and heritage craftsmanship.</p>
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid">
+          <!-- Rendered dynamically via JS with Indian photographs -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: EDITORIAL SPOTLIGHT (BENGALURU AI NEXUS) -->
+    <section class="editorial-spotlight-section" id="editorialSpotlightSection">
+      <div class="container">
+        <div class="editorial-spotlight-banner">
+          <div class="spotlight-media-col">
+            <img src="assets/images/event-bengaluru-ai.jpg" alt="Bengaluru DeepTech & AI Nexus keynote hall" class="editorial-spotlight-img" loading="lazy">
+            <span class="spotlight-exclusive-tag">FLAGSHIP SUMMIT • BENGALURU</span>
+          </div>
+          <div class="spotlight-content-col">
+            <span class="spotlight-mini-tag">TECHNOLOGY & FRONTIER AI</span>
+            <h2 class="spotlight-headline">Bengaluru DeepTech & AI Nexus 2026</h2>
+            <div class="spotlight-meta-line">
+              <span><svg class="icon icon-sm"><use href="#icon-calendar"/></svg> Thu, Nov 26, 2026</span>
+              <span><svg class="icon icon-sm"><use href="#icon-pin"/></svg> BIEC, Bengaluru</span>
+            </div>
+            <p class="spotlight-narrative">
+              India's premier deep-tech gathering uniting frontier generative AI researchers, robotics founders, and venture pioneers. Features live neuromorphic compute demos, silicon innovation tracks, and the closed-door Founders Roundtable.
+            </p>
+            <div class="spotlight-perks-row">
+              <span class="perk-chip">Frontier Keynotes</span>
+              <span class="perk-chip">VC Syndicate Lounge</span>
+              <span class="perk-chip">Hardware Labs</span>
+            </div>
+            <div class="spotlight-cta-line">
+              <div class="spotlight-cta-price">
+                <span class="price-prefix">Delegate Passes From</span>
+                <span class="price-val">₹2,499</span>
+              </div>
+              <div class="spotlight-cta-btns">
+                <button type="button" class="btn btn-outline" id="spotlightEditorialDetailsBtn">
+                  <span>Full Overview</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="spotlightEditorialBookBtn">
+                  <span>Reserve Passes</span>
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: EXPLORE EVENTS CATALOGUE (14+ INDIAN EXPERIENCES) -->
+    <section class="catalogue-section" id="explore">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="catalogue-header">
+          <div>
+            <span class="section-eyebrow">THE ARCHIVE</span>
+            <h2 class="section-title">Explore All Experiences in India</h2>
+          </div>
+          <div class="catalogue-count-badge" id="resultsCount">Showing 14 experiences</div>
+        </div>
+
+        <!-- Filter Control Bar -->
+        <div class="filters-toolbar" role="region" aria-label="Filters">
+          <div class="toolbar-primary">
+            <!-- Search bar -->
+            <div class="filter-search-box">
+              <svg class="icon search-icon" aria-hidden="true"><use href="#icon-search"/></svg>
+              <input type="text" id="catalogueSearchInput" placeholder="Search by event title, artist, or venue..." aria-label="Search events">
+              <button type="button" class="btn-clear-search" id="clearSearchBtn" aria-label="Clear search text" style="display: none;">
+                <svg class="icon"><use href="#icon-close"/></svg>
+              </button>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="category-pills" id="categoryPills" role="tablist" aria-label="Filter by category">
+              <button type="button" class="cat-pill active" data-category="all" role="tab" aria-selected="true">All Disciplines</button>
+              <button type="button" class="cat-pill" data-category="Music & Concerts" role="tab" aria-selected="false">Music & Sangeet</button>
+              <button type="button" class="cat-pill" data-category="Technology" role="tab" aria-selected="false">Tech & AI</button>
+              <button type="button" class="cat-pill" data-category="Art & Culture" role="tab" aria-selected="false">Art & Biennales</button>
+              <button type="button" class="cat-pill" data-category="Food & Drink" role="tab" aria-selected="false">Royal Feasts</button>
+              <button type="button" class="cat-pill" data-category="Sports" role="tab" aria-selected="false">Sports & Marathons</button>
+              <button type="button" class="cat-pill" data-category="Heritage & Craft" role="tab" aria-selected="false">Heritage & Craft</button>
+            </div>
+          </div>
+
+          <div class="toolbar-secondary">
+            <!-- City Dropdown -->
+            <div class="select-wrapper">
+              <label for="filterCity" class="sr-only">City Filter</label>
+              <select id="filterCity">
+                <option value="all">All Indian Cities</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi NCR">Delhi NCR</option>
+                <option value="Jaipur">Jaipur</option>
+                <option value="Goa">Goa</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Kochi">Kochi</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Varanasi">Varanasi</option>
+                <option value="Rishikesh">Rishikesh</option>
+                <option value="Ladakh">Ladakh</option>
+              </select>
+              <svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </div>
+
+            <!-- Date Dropdown -->
+            <div class="select-wrapper">
+              <label for="filterDate" class="sr-only">Date Filter</label>
+              <select id="filterDate">
+                <option value="all">Any Date / Season</option>
+                <option value="weekend">This Weekend</option>
+                <option value="winter">Winter 2026 (Nov - Dec)</option>
+                <option value="spring">Spring 2027 (Jan - Feb)</option>
+                <option value="summer">Summer 2027 (Mar - May)</option>
+              </select>
+              <svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </div>
+
+            <!-- Price Dropdown in Rupees -->
+            <div class="select-wrapper">
+              <label for="filterPrice" class="sr-only">Price Filter</label>
+              <select id="filterPrice">
+                <option value="all">Any Price</option>
+                <option value="under1000">Under ₹1,000</option>
+                <option value="1000-2500">₹1,000 to ₹2,500</option>
+                <option value="over2500">₹2,500+</option>
+              </select>
+              <svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </div>
+
+            <!-- Sort Dropdown -->
+            <div class="select-wrapper">
+              <label for="filterSort" class="sr-only">Sort by</label>
+              <select id="filterSort">
+                <option value="featured">Sort: Curator's Pick</option>
+                <option value="date-soonest">Sort: Date (Earliest)</option>
+                <option value="price-asc">Sort: Price (Low to High)</option>
+                <option value="price-desc">Sort: Price (High to Low)</option>
+                <option value="name">Sort: Alphabetical (A-Z)</option>
+              </select>
+              <svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </div>
+
+            <!-- Reset Button -->
+            <button type="button" class="btn btn-ghost btn-icon-text" id="resetFiltersBtn" title="Reset all search filters">
+              <svg class="icon" aria-hidden="true"><use href="#icon-close"/></svg>
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <!-- Active Filter Tags Row -->
+          <div class="active-chips-row" id="activeChipsRow" style="display: none;">
+            <span class="active-chips-label">Active filters:</span>
+            <div class="active-chips-container" id="activeChipsContainer"></div>
+          </div>
+        </div>
+
+        <!-- Events Grid (14+ Real Photographic Indian Cards) -->
+        <div class="events-grid" id="eventsGrid" aria-live="polite">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- No Results Fallback State -->
+        <div class="empty-state" id="noResultsState" style="display: none;">
+          <div class="empty-illustration">
+            <svg viewBox="0 0 80 80" width="80" height="80" aria-hidden="true">
+              <circle cx="40" cy="40" r="38" fill="var(--bg-surface-alt)" stroke="var(--border-medium)" stroke-width="2"/>
+              <path d="M26 26L54 54M54 26L26 54" stroke="var(--text-secondary)" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="40" cy="40" r="8" fill="var(--accent-coral)" fill-opacity="0.2"/>
+            </svg>
+          </div>
+          <h3 class="empty-title">No matching experiences found</h3>
+          <p class="empty-desc">We couldn't find any Indian events matching your selected criteria. Try adjusting your city or resetting filters.</p>
+          <button type="button" class="btn btn-primary" id="emptyStateResetBtn">
+            <span>Clear All Filters</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: CONTRASTING DARK PHOTOGRAPHIC SECTION (ROYAL NOCTURNE) -->
+    <section class="nocturne-section">
+      <div class="nocturne-bg">
+        <img src="assets/images/showcase-palace-night.jpg" alt="Illuminated royal Indian palace facade at night" class="nocturne-bg-img" loading="lazy">
+        <div class="nocturne-overlay"></div>
+      </div>
+      <div class="container nocturne-inner">
+        <div class="nocturne-badge">
+          <svg class="icon icon-sm"><use href="#icon-sparkle"/></svg>
+          <span>THE ROYAL NOCTURNE SERIES</span>
+        </div>
+        <h2 class="nocturne-headline">Private Heritage Salons. Palace Courtyards. Unrivaled Access.</h2>
+        <p class="nocturne-copy">
+          Beyond general festival admission, Eventra collaborates with royal trusts, venerable sangeet gharanas, and premier cultural institutions to present private chamber concerts, Falaknuma dawat dinners, and midnight palace courtyard recitals.
+        </p>
+        <div class="nocturne-highlights">
+          <div class="nocturne-card">
+            <span class="nocturne-icon">✦</span>
+            <h4>Palace Courtyard Acoustics</h4>
+            <p>Intimate baithak recitals in historic Jaipur and Hyderabad royal verandas with maestro performers.</p>
+          </div>
+          <div class="nocturne-card">
+            <span class="nocturne-icon">✦</span>
+            <h4>Awadhi Dawat Tastings</h4>
+            <p>Direct interaction with generational Khansamas preserving ancient slow-cooked charcoal recipes.</p>
+          </div>
+          <div class="nocturne-card">
+            <span class="nocturne-icon">✦</span>
+            <h4>Curator Walkthroughs</h4>
+            <p>Exclusive private previews at the Kochi Biennale and Mandi House theatre halls before public opening.</p>
+          </div>
+        </div>
+        <div class="nocturne-action">
+          <a href="#explore" class="btn btn-primary">
+            <span>Explore VIP Heritage Passes</span>
+            <svg class="icon icon-sm"><use href="#icon-arrow-right"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: SAVED EVENTS (WISHLIST) -->
+    <section class="saved-section" id="saved">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <span class="section-eyebrow">YOUR COLLECTION</span>
+            <h2 class="section-title">Saved Experiences</h2>
+          </div>
+          <div class="saved-actions" id="savedSectionActions" style="display: none;">
+            <button type="button" class="btn btn-ghost btn-sm" id="clearAllSavedBtn">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-trash"/></svg>
+              <span>Clear Wishlist</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="saved-grid" id="savedGrid">
+          <!-- Dynamically populated via JS with Indian photographs -->
+        </div>
+
+        <!-- Saved Empty State -->
+        <div class="empty-state" id="savedEmptyState" style="display: none;">
+          <div class="empty-illustration">
+            <svg viewBox="0 0 80 80" width="80" height="80" aria-hidden="true">
+              <circle cx="40" cy="40" r="38" fill="var(--bg-tint-lavender)" stroke="var(--accent-cobalt)" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <path d="M40 24l4.5 13.5h14.5l-11.8 8.5 4.5 14-11.7-8.6-11.7 8.6 4.5-14-11.8-8.5h14.5z" fill="var(--accent-cobalt)" fill-opacity="0.2" stroke="var(--accent-cobalt)" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="empty-title">No saved Indian events yet</h3>
+          <p class="empty-desc">Click the bookmark icon on any experience to curate your personal itinerary of must-attend concerts, summits, and festivals.</p>
+          <a href="#explore" class="btn btn-primary">
+            <span>Explore Indian Events</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: MY TICKETS & SIMULATED BOOKINGS -->
+    <section class="tickets-section" id="my-tickets">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <span class="section-eyebrow">DIGITAL PASSES</span>
+            <h2 class="section-title">My Tickets & Reservations</h2>
+          </div>
+          <p class="section-desc">Simulated passes stored securely in your browser's local storage. Ready to view, verify, or print.</p>
+        </div>
+
+        <!-- Tickets List -->
+        <div class="tickets-list" id="ticketsList">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- Tickets Empty State -->
+        <div class="empty-state" id="ticketsEmptyState" style="display: none;">
+          <div class="empty-illustration">
+            <svg viewBox="0 0 80 80" width="80" height="80" aria-hidden="true">
+              <rect x="15" y="22" width="50" height="36" rx="4" fill="var(--bg-surface-alt)" stroke="var(--accent-cobalt)" stroke-width="2"/>
+              <line x1="32" y1="22" x2="32" y2="58" stroke="var(--accent-cobalt)" stroke-width="2" stroke-dasharray="3 3"/>
+              <circle cx="32" cy="22" r="4" fill="var(--bg-surface)"/>
+              <circle cx="32" cy="58" r="4" fill="var(--bg-surface)"/>
+            </svg>
+          </div>
+          <h3 class="empty-title">No passes reserved yet</h3>
+          <p class="empty-desc">You have not booked any demonstration passes yet. Browse our curated calendar across Mumbai, Bengaluru, Delhi, or Goa to test the booking flow.</p>
+          <a href="#explore" class="btn btn-primary">
+            <span>Discover Events to Book</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: EDITORIAL PHILOSOPHY & PILLARS -->
+    <section class="philosophy-section" id="philosophy">
+      <div class="container philosophy-grid">
+        <div class="philosophy-card">
+          <div class="phil-num">01</div>
+          <h3 class="phil-title">Pan-India Curation</h3>
+          <p class="phil-desc">Every event is chosen for authentic artistic brilliance, cultural resonance, and visionary production. We celebrate the best of modern and classical India.</p>
+        </div>
+        <div class="philosophy-card">
+          <div class="phil-num">02</div>
+          <h3 class="phil-title">Authentic Venue Imagery</h3>
+          <p class="phil-desc">We showcase real photographs from Indian venues, heritage courtyards, and concert amphitheatres, providing true insight into the atmosphere before reserving.</p>
+        </div>
+        <div class="philosophy-card">
+          <div class="phil-num">03</div>
+          <h3 class="phil-title">Instant Digital Passports</h3>
+          <p class="phil-desc">Simulated passes with Indian PNR references, tiered admission perks, and print-ready passes stored locally in your browser with zero payment risk.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Primary Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand-col">
+        <a href="#discover" class="footer-logo">
+          <svg viewBox="0 0 36 36" width="30" height="30" aria-hidden="true">
+            <rect width="36" height="36" rx="9" fill="#111D2E"/>
+            <path d="M12 10.5h12c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5h-9v4.5h7.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5H15v4.5h9c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5H12c-.8 0-1.5-.7-1.5-1.5v-15c0-.8.7-1.5 1.5-1.5z" fill="#FFFFFF"/>
+            <circle cx="27" cy="10" r="2.5" fill="#FF8C38"/>
+          </svg>
+          <span class="footer-brand-title">EVENTRA INDIA</span>
+        </a>
+        <p class="footer-tagline">Discover. Book. Experience.</p>
+        <p class="footer-desc">India's premier cultural discovery and demonstration ticketing platform. Built for portfolio presentation with responsive frontend engineering.</p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 class="footer-heading">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#discover">Discover Home</a></li>
+          <li><a href="#explore">Explore Indian Archive</a></li>
+          <li><a href="#saved">Saved Wishlist</a></li>
+          <li><a href="#my-tickets">My Digital Passes</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 class="footer-heading">Cultural Hubs</h4>
+        <ul class="footer-links">
+          <li><a href="#explore" data-filter-city="Bengaluru">Bengaluru DeepTech</a></li>
+          <li><a href="#explore" data-filter-city="Mumbai">Mumbai NCPA & Arts</a></li>
+          <li><a href="#explore" data-filter-city="Delhi NCR">Delhi NCR Mandi House</a></li>
+          <li><a href="#explore" data-filter-city="Jaipur">Jaipur Virasat Crafts</a></li>
+          <li><a href="#explore" data-filter-city="Goa">Goa Coastal Sound</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 class="footer-heading">Demonstration Notice</h4>
+        <p class="footer-disclaimer-text">
+          All events, dates, venues, artists, and ₹ pricing are fictional demonstrations created for design and engineering portfolio presentation. No actual transactions or live reservations are processed.
+        </p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div class="footer-copy">
+        &copy; 2026 Eventra India. Handcrafted with semantic HTML5, CSS3 & Vanilla JavaScript. All rights reserved.
+      </div>
+      <div class="footer-meta">
+        <span>Zero external CDN dependencies</span>
+        <span class="meta-dot">•</span>
+        <span>Version 3.0.0 (Bharat Edition)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- MODAL 1: EVENT DETAILS DIALOG (INDIAN REAL PHOTOGRAPHY) -->
+  <!-- ============================================================ -->
+  <div class="modal-backdrop" id="eventDetailsModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalEventTitle">
+    <div class="modal-container modal-lg">
+      <button type="button" class="modal-close-btn" id="closeDetailsModalBtn" aria-label="Close event details modal">
+        <svg class="icon"><use href="#icon-close"/></svg>
+      </button>
+
+      <div class="modal-content" id="modalDetailsContent">
+        <!-- Injected dynamically via JS with Indian photographs -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL 2: TICKET BOOKING FLOW DIALOG (INR CURRENCY) -->
+  <!-- ============================================================ -->
+  <div class="modal-backdrop" id="bookingModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalBookingTitle">
+    <div class="modal-container modal-md">
+      <button type="button" class="modal-close-btn" id="closeBookingModalBtn" aria-label="Close booking modal">
+        <svg class="icon"><use href="#icon-close"/></svg>
+      </button>
+
+      <div class="booking-modal-body">
+        <!-- Steps Indicator -->
+        <div class="booking-steps-bar" aria-label="Booking Progress">
+          <div class="step-item active" id="stepIndicator1">
+            <span class="step-num">1</span>
+            <span class="step-name">Tier & Qty</span>
+          </div>
+          <div class="step-line" id="stepLine1"></div>
+          <div class="step-item" id="stepIndicator2">
+            <span class="step-num">2</span>
+            <span class="step-name">Attendee Info</span>
+          </div>
+          <div class="step-line" id="stepLine2"></div>
+          <div class="step-item" id="stepIndicator3">
+            <span class="step-num">3</span>
+            <span class="step-name">Pass Confirmation</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Form Stages -->
+        <div class="booking-stages-container" id="bookingStagesContainer">
+          <!-- STEP 1: Select Tier and Quantity -->
+          <div class="booking-stage active" id="bookingStage1">
+            <div class="stage-header">
+              <span class="stage-eyebrow" id="bookingEventCategory">CATEGORY</span>
+              <h3 class="stage-title" id="modalBookingTitle">Select Tickets</h3>
+              <p class="stage-subtitle" id="bookingEventSummary">Event Date & Location</p>
+            </div>
+
+            <!-- Tier Selection Radio Cards -->
+            <fieldset class="tier-fieldset">
+              <legend class="sr-only">Choose a ticket tier</legend>
+              <div class="tier-options-list" id="tierOptionsList">
+                <!-- Dynamically generated tiers -->
+              </div>
+            </fieldset>
+
+            <!-- Quantity Stepper -->
+            <div class="quantity-control-row">
+              <div>
+                <label for="ticketQtyInput" class="qty-label">Ticket Quantity</label>
+                <span class="qty-sub">Max 6 demo passes per booking</span>
+              </div>
+              <div class="quantity-stepper">
+                <button type="button" class="qty-btn" id="qtyDecrementBtn" aria-label="Decrease quantity" disabled>−</button>
+                <input type="number" id="ticketQtyInput" value="1" min="1" max="6" readonly aria-label="Quantity of tickets">
+                <button type="button" class="qty-btn" id="qtyIncrementBtn" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <!-- Price Breakdown Calculation (in INR) -->
+            <div class="order-summary-box">
+              <div class="summary-line">
+                <span id="summaryTierLabel">Standard Admission × 1</span>
+                <span class="summary-val" id="summarySubtotal">₹0</span>
+              </div>
+              <div class="summary-line">
+                <span>Simulated GST & Platform Fee</span>
+                <span class="summary-val" id="summaryFee">₹99</span>
+              </div>
+              <div class="summary-line summary-total">
+                <span>Estimated Total (Demo)</span>
+                <span class="summary-val total-price" id="summaryTotal">₹0</span>
+              </div>
+            </div>
+
+            <div class="stage-actions">
+              <button type="button" class="btn btn-ghost" id="cancelBookingBtn">Cancel</button>
+              <button type="button" class="btn btn-primary" id="proceedToAttendeeBtn">
+                <span>Continue to Attendee Info</span>
+                <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Attendee Info & Simulated Checkout -->
+          <div class="booking-stage" id="bookingStage2" style="display: none;">
+            <div class="stage-header">
+              <span class="stage-eyebrow">STEP 2 OF 3</span>
+              <h3 class="stage-title">Attendee Details</h3>
+              <p class="stage-subtitle">Provide guest details for your simulated digital admission pass.</p>
+            </div>
+
+            <form id="attendeeForm" novalidate onsubmit="return false;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="attendeeName">Primary Attendee Name <span class="req">*</span></label>
+                  <input type="text" id="attendeeName" class="form-control" placeholder="e.g. Aarav Sharma" required maxlength="50" value="Aarav Sharma">
+                  <span class="form-error-msg" id="nameError">Please enter a valid attendee name.</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="attendeeEmail">Email for Digital Pass <span class="req">*</span></label>
+                  <input type="email" id="attendeeEmail" class="form-control" placeholder="aarav.sharma@example.in" required maxlength="60" value="aarav.sharma@eventra.in">
+                  <span class="form-error-msg" id="emailError">Please enter a valid email address.</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="attendeePhone">Mobile Number (SMS Pass Simulation)</label>
+                  <input type="tel" id="attendeePhone" class="form-control" placeholder="+91 98765 43210" value="+91 98765 43210">
+                </div>
+              </div>
+
+              <div class="demo-notice-card">
+                <div class="demo-notice-icon">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-info"/></svg>
+                </div>
+                <div class="demo-notice-text">
+                  <strong>Zero-Risk Demonstration Booking</strong>
+                  <p>No UPI, credit card, or payment is collected. Your pass will be instantly issued, assigned an Indian PNR reference code, and stored locally in your browser.</p>
+                </div>
+              </div>
+
+              <div class="stage-actions">
+                <button type="button" class="btn btn-outline" id="backToTierBtn">
+                  <span>Back</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="confirmDemoBookingBtn">
+                  <span>Confirm Demo Booking (₹)</span>
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-check"/></svg>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- STEP 3: Booking Confirmation -->
+          <div class="booking-stage" id="bookingStage3" style="display: none;">
+            <div class="confirmation-panel">
+              <div class="confirm-icon-wrap">
+                <svg class="icon confirm-icon" aria-hidden="true"><use href="#icon-check"/></svg>
+              </div>
+              <h3 class="confirm-title">Reservation Confirmed!</h3>
+              <p class="confirm-sub">Your digital passes have been generated and added to your wallet.</p>
+
+              <div class="confirm-details-card">
+                <div class="confirm-ref-row">
+                  <span class="ref-label">Booking PNR Reference</span>
+                  <span class="ref-code" id="confirmBookingRef">EVT-IN-2026-XXXXX</span>
+                </div>
+                <div class="confirm-info-row">
+                  <span class="info-label">Event:</span>
+                  <span class="info-val" id="confirmEventTitle">Event Title</span>
+                </div>
+                <div class="confirm-info-row">
+                  <span class="info-label">Tier & Qty:</span>
+                  <span class="info-val" id="confirmTierQty">Standard Admission × 2</span>
+                </div>
+                <div class="confirm-info-row">
+                  <span class="info-label">Simulated Total:</span>
+                  <span class="info-val" id="confirmTotalPaid">₹0</span>
+                </div>
+              </div>
+
+              <div class="confirm-actions">
+                <button type="button" class="btn btn-primary" id="viewDigitalTicketBtn">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-ticket"/></svg>
+                  <span>View Digital Ticket Pass</span>
+                </button>
+                <button type="button" class="btn btn-outline" id="finishBookingBtn">
+                  <span>Done & Return to Catalogue</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL 3: DIGITAL TICKET PASS DIALOG (PRINTABLE) -->
+  <!-- ============================================================ -->
+  <div class="modal-backdrop" id="ticketModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="ticketPassTitle">
+    <div class="modal-container modal-ticket">
+      <div class="ticket-modal-toolbar">
+        <div class="ticket-status-pill">
+          <span class="status-indicator"></span>
+          <span>OFFICIAL INDIAN DEMO PASS</span>
+        </div>
+        <div class="ticket-modal-actions">
+          <button type="button" class="btn btn-sm btn-outline print-hide" id="printTicketBtn" title="Print physical copy">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-printer"/></svg>
+            <span>Print Pass</span>
+          </button>
+          <button type="button" class="modal-close-btn print-hide" id="closeTicketModalBtn" aria-label="Close ticket view">
+            <svg class="icon"><use href="#icon-close"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable Ticket Card Pass -->
+      <article class="ticket-pass-card" id="printableTicketCard">
+        <!-- Left / Top Artwork & Branding Header -->
+        <div class="ticket-header-band">
+          <div class="ticket-brand">
+            <span class="t-brand-name">EVENTRA INDIA</span>
+            <span class="t-brand-sub">Admission Credential</span>
+          </div>
+          <div class="ticket-tier-tag" id="ticketPassTier">VIP ACCESS</div>
+        </div>
+
+        <div class="ticket-artwork-mini" id="ticketPassArtwork">
+          <!-- Real Indian Event Photo rendered here -->
+        </div>
+
+        <div class="ticket-body">
+          <h2 class="ticket-event-name" id="ticketPassTitle">Event Title Goes Here</h2>
+          
+          <div class="ticket-meta-grid">
+            <div class="ticket-meta-item">
+              <span class="t-label">Date</span>
+              <span class="t-val" id="ticketPassDate">Friday, Nov 13, 2026</span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">Doors Open</span>
+              <span class="t-val" id="ticketPassTime">19:00 IST</span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">Venue</span>
+              <span class="t-val" id="ticketPassVenue">NCPA Tata Theatre</span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="t-label">City</span>
+              <span class="t-val" id="ticketPassCity">Mumbai, India</span>
+            </div>
+          </div>
+
+          <div class="ticket-divider-perforated">
+            <span class="notch notch-left"></span>
+            <div class="perforated-line"></div>
+            <span class="notch notch-right"></span>
+          </div>
+
+          <div class="ticket-holder-info">
+            <div class="ticket-holder-row">
+              <div>
+                <span class="t-label">Ticket Holder</span>
+                <span class="t-val t-val-bold" id="ticketPassAttendee">Aarav Sharma</span>
+              </div>
+              <div class="text-right">
+                <span class="t-label">Quantity</span>
+                <span class="t-val t-val-bold" id="ticketPassQty">2 Guests</span>
+              </div>
+            </div>
+
+            <div class="ticket-holder-row">
+              <div>
+                <span class="t-label">PNR / Reference</span>
+                <span class="t-val t-code" id="ticketPassRef">EVT-IN-2026-08912</span>
+              </div>
+              <div class="text-right">
+                <span class="t-label">Total Amount (₹)</span>
+                <span class="t-val t-code" id="ticketPassTotal">₹3,097</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Locally Rendered QR / Barcode Canvas Visual -->
+          <div class="ticket-code-section">
+            <canvas id="ticketQrCanvas" width="130" height="130" aria-label="Visual simulated ticket admission QR graphic"></canvas>
+            <div class="ticket-code-meta">
+              <span class="barcode-sub">SIMULATED ADMISSION CREDENTIAL</span>
+              <span class="barcode-num" id="ticketBarcodeNumber">8 4 9 2 0 1 7 5 3 2</span>
+              <span class="barcode-disclaimer">Non-transferable simulated pass for developer portfolio presentation only.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main Application Script -->
+  <script src="script.js"></script>
+</body>
+</html>
