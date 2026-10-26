@@ -93,20 +93,6 @@
     </defs>
   </svg>
 
-  <!-- Top Live Notice & India Season Bar -->
-  <aside class="notice-bar" aria-label="India Cultural Season Notice">
-    <div class="notice-content">
-      <span class="notice-badge">BHARAT 2026–2027 EDITION</span>
-      <span class="notice-text">
-        Experience curated live culture across Bengaluru, Mumbai, Delhi NCR, Jaipur, Goa, and Kochi. All ticketing is simulated for portfolio demonstration.
-      </span>
-      <div class="notice-countdown" id="topMarqueeCountdown">
-        <span class="countdown-label">Next Marquee Live in:</span>
-        <span class="countdown-val" id="countdownTimerVal">19d 14h 22m</span>
-      </div>
-    </div>
-  </aside>
-
   <!-- Primary Site Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner container">
@@ -134,6 +120,17 @@
           <li>
             <a href="#explore" class="nav-link" data-nav="explore">
               <span>Explore Events</span>
+            </a>
+          </li>
+          <li>
+            <a href="#atlas" class="nav-link" data-nav="atlas">
+              <span>Cultural Atlas</span>
+            </a>
+          </li>
+          <li>
+            <a href="#bucket-list" class="nav-link" data-nav="bucket-list">
+              <span>100 Things to Do</span>
+              <span class="nav-badge" id="bucketCountBadge">100</span>
             </a>
           </li>
           <li>
@@ -196,6 +193,17 @@
         <a href="#explore" class="drawer-link" data-nav="explore">
           <span class="drawer-link-title">Explore Events</span>
           <span class="drawer-link-sub">Bengaluru, Mumbai, Delhi, Jaipur & Goa</span>
+        </a>
+        <a href="#atlas" class="drawer-link" data-nav="atlas">
+          <span class="drawer-link-title">Cultural Atlas</span>
+          <span class="drawer-link-sub">Interactive regional map & sonic heritage</span>
+        </a>
+        <a href="#bucket-list" class="drawer-link" data-nav="bucket-list">
+          <div class="drawer-link-with-badge">
+            <span class="drawer-link-title">100 Things to Do</span>
+            <span class="nav-badge">100</span>
+          </div>
+          <span class="drawer-link-sub">The definitive pan-India bucket list</span>
         </a>
         <a href="#saved" class="drawer-link" data-nav="saved">
           <div class="drawer-link-with-badge">
@@ -593,7 +601,270 @@
       </div>
     </section>
 
-    <!-- SECTION 6: SAVED EVENTS (WISHLIST) -->
+    <!-- SECTION 6: CULTURAL ATLAS & REGIONAL VISUALIZER -->
+    <section class="atlas-section" id="atlas">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <span class="section-eyebrow">INTERACTIVE REGIONAL VISUALIZER</span>
+            <h2 class="section-title">The Cultural Atlas of Bharat</h2>
+          </div>
+          <p class="section-desc">Explore India's distinct cultural territories, acoustic lineages, culinary roots, and active curated gatherings across the subcontinent.</p>
+        </div>
+
+        <div class="atlas-layout">
+          <!-- Interactive Regional Map & Hub Selectors -->
+          <div class="atlas-visual-card">
+            <div class="atlas-map-container">
+              <svg class="atlas-svg-map" viewBox="0 0 700 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive Cultural Atlas Map of India">
+                <!-- Decorative Topographical Background Grid -->
+                <defs>
+                  <radialGradient id="mapGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--accent-cobalt)" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="var(--accent-cobalt)" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <circle cx="350" cy="380" r="320" fill="url(#mapGlow)" />
+
+                <!-- Stylized Geometric Indian Geographic Poly Paths -->
+                <!-- Region: Himalayas & Kashmir -->
+                <path id="zone-himalayas" class="map-zone" data-zone="himalayas"
+                  d="M 240,60 L 320,40 L 400,75 L 390,140 L 320,150 L 250,135 Z" />
+                
+                <!-- Region: Northern Heritage & Plains (Delhi, Jaipur, Varanasi) -->
+                <path id="zone-north" class="map-zone active" data-zone="north"
+                  d="M 230,145 L 320,150 L 440,165 L 430,280 L 310,310 L 210,250 L 190,185 Z" />
+
+                <!-- Region: Western Coast & Deserts (Mumbai, Goa, Kutch, Gujarat) -->
+                <path id="zone-west" class="map-zone" data-zone="west"
+                  d="M 120,270 L 210,255 L 300,320 L 280,480 L 210,490 L 150,380 L 110,310 Z" />
+
+                <!-- Region: Central Heartlands (Madhya Pradesh & Bundelkhand) -->
+                <path id="zone-central" class="map-zone" data-zone="central"
+                  d="M 310,310 L 440,285 L 460,380 L 370,430 L 290,410 Z" />
+
+                <!-- Region: Eastern Delta & Bengal Renaissance (Kolkata, Odisha, Assam) -->
+                <path id="zone-east" class="map-zone" data-zone="east"
+                  d="M 450,260 L 580,240 L 670,270 L 640,360 L 530,370 L 460,390 L 440,310 Z" />
+
+                <!-- Region: Deccan Plateau & Southern Frontier (Bengaluru, Hyderabad, Kerala, Tamil Nadu) -->
+                <path id="zone-south" class="map-zone" data-zone="south"
+                  d="M 280,430 L 370,430 L 450,470 L 410,660 L 330,730 L 250,620 L 240,510 Z" />
+
+                <!-- Connecting Trade & Cultural Route Lines -->
+                <g class="map-routes">
+                  <path d="M 290,195 Q 315,260 215,370" class="route-line" />
+                  <path d="M 290,195 Q 370,230 425,275" class="route-line" />
+                  <path d="M 425,275 Q 480,310 515,345" class="route-line" />
+                  <path d="M 215,370 Q 235,465 245,535" class="route-line" />
+                  <path d="M 215,370 Q 275,410 325,450" class="route-line" />
+                  <path d="M 325,450 Q 320,535 315,570" class="route-line" />
+                </g>
+
+                <!-- City Radar Pins with Pulse Rings -->
+                <!-- Leh / Ladakh -->
+                <g class="map-pin" data-hub="Ladakh" data-zone="himalayas" transform="translate(325, 95)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="16" />
+                  <circle class="pin-dot" r="6" />
+                  <text class="pin-label" x="12" y="4">Ladakh</text>
+                </g>
+                <!-- Rishikesh -->
+                <g class="map-pin" data-hub="Rishikesh" data-zone="himalayas" transform="translate(325, 175)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="14" />
+                  <circle class="pin-dot" r="5" />
+                  <text class="pin-label" x="12" y="4">Rishikesh</text>
+                </g>
+                <!-- Delhi NCR -->
+                <g class="map-pin active" data-hub="Delhi NCR" data-zone="north" transform="translate(290, 205)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="18" />
+                  <circle class="pin-dot" r="6.5" />
+                  <text class="pin-label" x="14" y="4">Delhi NCR</text>
+                </g>
+                <!-- Jaipur -->
+                <g class="map-pin" data-hub="Jaipur" data-zone="north" transform="translate(250, 235)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="15" />
+                  <circle class="pin-dot" r="5.5" />
+                  <text class="pin-label" x="-12" y="4" text-anchor="end">Jaipur</text>
+                </g>
+                <!-- Varanasi -->
+                <g class="map-pin" data-hub="Varanasi" data-zone="north" transform="translate(425, 275)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="16" />
+                  <circle class="pin-dot" r="6" />
+                  <text class="pin-label" x="12" y="4">Varanasi</text>
+                </g>
+                <!-- Kolkata -->
+                <g class="map-pin" data-hub="Kolkata" data-zone="east" transform="translate(515, 345)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="16" />
+                  <circle class="pin-dot" r="6" />
+                  <text class="pin-label" x="12" y="4">Kolkata</text>
+                </g>
+                <!-- Mumbai -->
+                <g class="map-pin" data-hub="Mumbai" data-zone="west" transform="translate(215, 375)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="18" />
+                  <circle class="pin-dot" r="6.5" />
+                  <text class="pin-label" x="-12" y="4" text-anchor="end">Mumbai</text>
+                </g>
+                <!-- Hyderabad -->
+                <g class="map-pin" data-hub="Hyderabad" data-zone="south" transform="translate(325, 450)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="16" />
+                  <circle class="pin-dot" r="6" />
+                  <text class="pin-label" x="12" y="4">Hyderabad</text>
+                </g>
+                <!-- Goa -->
+                <g class="map-pin" data-hub="Goa" data-zone="west" transform="translate(245, 535)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="15" />
+                  <circle class="pin-dot" r="5.5" />
+                  <text class="pin-label" x="-12" y="4" text-anchor="end">Goa</text>
+                </g>
+                <!-- Bengaluru -->
+                <g class="map-pin" data-hub="Bengaluru" data-zone="south" transform="translate(315, 570)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="18" />
+                  <circle class="pin-dot" r="6.5" />
+                  <text class="pin-label" x="12" y="4">Bengaluru</text>
+                </g>
+                <!-- Kochi -->
+                <g class="map-pin" data-hub="Kochi" data-zone="south" transform="translate(290, 650)" role="button" tabindex="0">
+                  <circle class="pin-pulse" r="16" />
+                  <circle class="pin-dot" r="6" />
+                  <text class="pin-label" x="-12" y="4" text-anchor="end">Kochi</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Region Pill Quick Selector -->
+            <div class="atlas-zone-tabs" role="tablist" aria-label="Cultural Region Tabs">
+              <button type="button" class="atlas-tab active" data-zone="north" role="tab" aria-selected="true">North Heritage</button>
+              <button type="button" class="atlas-tab" data-zone="south" role="tab" aria-selected="false">Deccan & South</button>
+              <button type="button" class="atlas-tab" data-zone="west" role="tab" aria-selected="false">West Coast</button>
+              <button type="button" class="atlas-tab" data-zone="east" role="tab" aria-selected="false">East & Bengal</button>
+              <button type="button" class="atlas-tab" data-zone="himalayas" role="tab" aria-selected="false">Himalayas</button>
+              <button type="button" class="atlas-tab" data-zone="central" role="tab" aria-selected="false">Heartlands</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Atlas Inspector HUD -->
+          <div class="atlas-inspector-card" id="atlasInspector">
+            <!-- Dynamically populated via JS based on selected region/pin -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: 100 THINGS TO DO IN BHARAT (THE DEFINITIVE BUCKET LIST) -->
+    <section class="bucket-section" id="bucket-list">
+      <div class="container">
+        <!-- Masthead -->
+        <div class="bucket-masthead">
+          <div class="bucket-badge">
+            <span class="badge-star">★</span>
+            <span>THE DEFINITIVE EXPERIENTIAL ARCHIVE</span>
+          </div>
+          <h2 class="bucket-title">100 Extraordinary Things to Do in India</h2>
+          <p class="bucket-lead">
+            An authored cultural odyssey spanning ancient ghats, royal Nizami banquets, high-altitude passes, living root bridges, and classical sangeet sanctuaries across Bharat. Save experiences to your personal checklist and track your journey.
+          </p>
+        </div>
+
+        <!-- Quest & Progress Bar Tracker HUD -->
+        <div class="bucket-tracker-card" id="bucketTrackerCard">
+          <div class="tracker-main-row">
+            <div class="tracker-badge-col">
+              <div class="tracker-avatar" id="bucketRankIcon">🏛️</div>
+              <div class="tracker-info">
+                <span class="tracker-sub">YOUR INDIAN ODYSSEY</span>
+                <h4 class="tracker-rank" id="bucketRankTitle">Curious Seeker</h4>
+              </div>
+            </div>
+
+            <div class="tracker-stat-col">
+              <div class="tracker-count-line">
+                <span class="stat-big" id="bucketSavedCount">0</span>
+                <span class="stat-total">/ 100 Explored</span>
+              </div>
+              <span class="tracker-pct" id="bucketPercentText">0% Complete</span>
+            </div>
+
+            <div class="tracker-actions">
+              <label class="tracker-filter-toggle">
+                <input type="checkbox" id="bucketOnlySavedCheck">
+                <span class="toggle-box"></span>
+                <span>View My Saved (<span id="bucketToggleCount">0</span>)</span>
+              </label>
+              <button type="button" class="btn btn-ghost btn-sm" id="bucketExportBtn" title="Print or save your bucket list">
+                <svg class="icon icon-sm"><use href="#icon-printer"/></svg>
+                <span>Export Checklist</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Visual Progress Meter -->
+          <div class="tracker-progress-track">
+            <div class="tracker-progress-bar" id="bucketProgressBar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar for 100 Things -->
+        <div class="bucket-toolbar">
+          <div class="bucket-search-box">
+            <svg class="icon"><use href="#icon-search"/></svg>
+            <input type="text" id="bucketSearchInput" placeholder="Search 100 experiences, UNESCO sites, cities, rāgas..." autocomplete="off">
+            <button type="button" class="btn-clear-search" id="bucketClearSearch" style="display: none;" aria-label="Clear search">
+              <svg class="icon icon-sm"><use href="#icon-close"/></svg>
+            </button>
+          </div>
+
+          <div class="bucket-category-scroll">
+            <button type="button" class="bkt-cat-pill active" data-category="all">All (100)</button>
+            <button type="button" class="bkt-cat-pill" data-category="Spiritual & Chants">Spiritual & Chants</button>
+            <button type="button" class="bkt-cat-pill" data-category="Palaces & Heritage">Palaces & UNESCO</button>
+            <button type="button" class="bkt-cat-pill" data-category="Royal Gastronomy">Royal Feasts</button>
+            <button type="button" class="bkt-cat-pill" data-category="Himalayan Heights">Himalayan Heights</button>
+            <button type="button" class="bkt-cat-pill" data-category="Living Crafts & Heritage">Living Crafts</button>
+            <button type="button" class="bkt-cat-pill" data-category="Festivals & Music">Festivals & Music</button>
+            <button type="button" class="bkt-cat-pill" data-category="Coastal & Waters">Coastal & Waters</button>
+            <button type="button" class="bkt-cat-pill" data-category="Frontier Tech & Modern">Frontier Tech</button>
+          </div>
+
+          <div class="bucket-secondary-filters">
+            <div class="select-wrapper select-sm">
+              <select id="bucketRegionSelect">
+                <option value="all">All Regions (Pan-India)</option>
+                <option value="North">North (Varanasi, Delhi, Jaipur)</option>
+                <option value="South">South (Bengaluru, Hyderabad, Kochi)</option>
+                <option value="West">West (Mumbai, Goa, Kutch)</option>
+                <option value="East">East (Kolkata, Puri, Darjeeling)</option>
+                <option value="Himalayas">Himalayas (Ladakh, Kashmir, Spiti)</option>
+                <option value="Central">Central (Khajuraho, Gwalior)</option>
+              </select>
+              <svg class="icon select-chevron"><use href="#icon-chevron-down"/></svg>
+            </div>
+            <span class="bucket-results-counter" id="bucketResultsCount">Showing 100 of 100 experiences</span>
+          </div>
+        </div>
+
+        <!-- 100 Experiences Grid -->
+        <div class="bucket-grid" id="bucketGrid">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- Bucket Empty State -->
+        <div class="empty-state" id="bucketEmptyState" style="display: none;">
+          <div class="empty-illustration">
+            <svg viewBox="0 0 80 80" width="80" height="80" aria-hidden="true">
+              <circle cx="40" cy="40" r="38" fill="var(--bg-tint-coral)" stroke="var(--accent-coral)" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <text x="40" y="48" font-size="28" text-anchor="middle">🔍</text>
+            </svg>
+          </div>
+          <h3 class="empty-title">No matching experiences found</h3>
+          <p class="empty-desc">Try clearing your search query or switching category filters to explore the rest of India’s 100 bucket list items.</p>
+          <button type="button" class="btn btn-primary" id="bucketResetFiltersBtn">
+            <span>Reset Bucket List Filters</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: SAVED EVENTS (WISHLIST) -->
     <section class="saved-section" id="saved">
       <div class="container">
         <div class="section-header-row">
@@ -797,6 +1068,50 @@
               <p class="stage-subtitle" id="bookingEventSummary">Event Date & Location</p>
             </div>
 
+            <!-- Interactive Seating Tier Map Visualizer -->
+            <div class="venue-visualizer-card">
+              <div class="visualizer-header-row">
+                <div>
+                  <span class="vis-eyebrow">SEATING ARCHITECTURE</span>
+                  <h4 class="vis-title">Interactive Stage & Tier Sector Map</h4>
+                </div>
+                <span class="vis-badge">Click sector to select</span>
+              </div>
+              <div class="visualizer-svg-wrap">
+                <svg class="venue-svg" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive venue seating visualizer">
+                  <!-- Stage -->
+                  <rect x="130" y="8" width="160" height="26" rx="5" class="v-stage" />
+                  <text x="210" y="25" text-anchor="middle" class="v-stage-label">PERFORMANCE STAGE</text>
+                  
+                  <!-- VIP Suites (Royal Box) -->
+                  <g class="v-tier-zone tier-zone-vip" data-tier-index="2" role="button" tabindex="0">
+                    <rect x="20" y="42" width="75" height="38" rx="6" />
+                    <text x="57" y="60" text-anchor="middle" class="v-zone-name">ROYAL BOX L</text>
+                    <text x="57" y="72" text-anchor="middle" class="v-zone-sub">VIP Suite</text>
+                  </g>
+                  <g class="v-tier-zone tier-zone-vip" data-tier-index="2" role="button" tabindex="0">
+                    <rect x="325" y="42" width="75" height="38" rx="6" />
+                    <text x="362" y="60" text-anchor="middle" class="v-zone-name">ROYAL BOX R</text>
+                    <text x="362" y="72" text-anchor="middle" class="v-zone-sub">VIP Suite</text>
+                  </g>
+                  
+                  <!-- Central Stalls Premium -->
+                  <g class="v-tier-zone tier-zone-stalls active" data-tier-index="1" role="button" tabindex="0">
+                    <path d="M 115,44 L 305,44 L 325,108 L 95,108 Z" />
+                    <text x="210" y="72" text-anchor="middle" class="v-zone-name">CENTRAL STALLS</text>
+                    <text x="210" y="87" text-anchor="middle" class="v-zone-sub">Prime Acoustic Sightlines</text>
+                  </g>
+                  
+                  <!-- Balcony Gallery -->
+                  <g class="v-tier-zone tier-zone-balcony" data-tier-index="0" role="button" tabindex="0">
+                    <path d="M 85,120 L 335,120 L 360,168 L 60,168 Z" />
+                    <text x="210" y="142" text-anchor="middle" class="v-zone-name">BALCONY UPPER GALLERY</text>
+                    <text x="210" y="156" text-anchor="middle" class="v-zone-sub">Elevated Sightline Tier</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
             <!-- Tier Selection Radio Cards -->
             <fieldset class="tier-fieldset">
               <legend class="sr-only">Choose a ticket tier</legend>
@@ -805,11 +1120,11 @@
               </div>
             </fieldset>
 
-            <!-- Quantity Stepper -->
+            <!-- Quantity Stepper & Group Discount Hint -->
             <div class="quantity-control-row">
               <div>
                 <label for="ticketQtyInput" class="qty-label">Ticket Quantity</label>
-                <span class="qty-sub">Max 6 demo passes per booking</span>
+                <span class="qty-sub">3+ passes unlock Cultural Circle 5% privilege</span>
               </div>
               <div class="quantity-stepper">
                 <button type="button" class="qty-btn" id="qtyDecrementBtn" aria-label="Decrease quantity" disabled>−</button>
@@ -823,6 +1138,10 @@
               <div class="summary-line">
                 <span id="summaryTierLabel">Standard Admission × 1</span>
                 <span class="summary-val" id="summarySubtotal">₹0</span>
+              </div>
+              <div class="summary-line discount-line" id="summaryDiscountRow" style="display: none;">
+                <span class="discount-label" id="summaryDiscountLabel">Cultural Circle Privilege (5%)</span>
+                <span class="summary-val discount-val" id="summaryDiscountVal">-₹0</span>
               </div>
               <div class="summary-line">
                 <span>Simulated GST & Platform Fee</span>
@@ -1043,10 +1362,45 @@
     </div>
   </div>
 
+  <!-- Floating Acoustic Soundscape Synthesizer Dock (Web Audio API) -->
+  <aside class="soundscape-dock" id="soundscapeDock" aria-label="Acoustic Atmosphere Synthesizer">
+    <div class="soundscape-inner">
+      <button type="button" class="soundscape-toggle-btn" id="soundscapePlayBtn" aria-label="Toggle Indian Acoustic Atmosphere Sound Preview">
+        <svg class="icon soundscape-icon-play" id="soundIconPlay" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        <svg class="icon soundscape-icon-pause" id="soundIconPause" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+          <rect x="6" y="4" width="4" height="16"/>
+          <rect x="14" y="4" width="4" height="16"/>
+        </svg>
+      </button>
+
+      <div class="soundscape-info">
+        <div class="soundscape-title-row">
+          <span class="soundscape-badge">SONIC AMBIENCE</span>
+          <canvas class="soundscape-canvas" id="soundscapeVisualizer" width="48" height="14" aria-hidden="true"></canvas>
+        </div>
+        <select class="soundscape-select" id="soundscapeToneSelect" aria-label="Select acoustic atmosphere">
+          <option value="tanpura">Raag Tanpura Drone (Sa-Pa-Sa)</option>
+          <option value="singing-bowl">Himalayan Singing Bowl</option>
+          <option value="ocean-swell">Goa Arabian Sea Waves</option>
+          <option value="deeptech-pulse">DeepTech Modular Clock Pulse</option>
+        </select>
+      </div>
+
+      <div class="soundscape-controls">
+        <label for="soundscapeVol" class="sr-only">Volume</label>
+        <input type="range" id="soundscapeVol" min="0" max="1" step="0.05" value="0.35" title="Adjust sound volume">
+        <button type="button" class="soundscape-close" id="soundscapeClose" title="Hide sound dock">×</button>
+      </div>
+    </div>
+  </aside>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- Main Application Script -->
+  <!-- Curated Data & Application Scripts -->
+  <script src="bharat100Data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

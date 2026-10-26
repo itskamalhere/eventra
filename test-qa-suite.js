@@ -3,7 +3,7 @@ const path = require('path');
 
 console.log('--- EVENTRA INDIA FUNCTIONAL QA TEST SUITE ---');
 
-// 1. Check index.html semantic landmarks
+// 1. Check index.html semantic landmarks & new Bharat features
 const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
 const checks = [
   { name: 'Semantic <header> landmark', pass: html.includes('<header class="site-header"') },
@@ -11,7 +11,12 @@ const checks = [
   { name: 'Semantic <footer> landmark', pass: html.includes('<footer class="site-footer"') },
   { name: 'Inline SVG icon definitions (zero external CDN fonts/icons)', pass: html.includes('<svg style="display: none;"') && html.includes('id="icon-sun"') },
   { name: 'Theme toggle button with Royal Sandalwood & Midnight Silk accessibility labels', pass: html.includes('id="themeToggleBtn"') },
-  { name: 'Live Marquee countdown ticker element', pass: html.includes('id="countdownTimerVal"') },
+  { name: 'Top marquee notice bar removed per user specification', pass: !html.includes('class="notice-bar"') && !html.includes('id="countdownTimerVal"') },
+  { name: 'Cultural Atlas section with interactive SVG map & inspector', pass: html.includes('id="atlas"') && html.includes('class="atlas-svg-map"') && html.includes('id="atlasInspector"') },
+  { name: '100 Things to Do in Bharat section with Quest Tracker HUD', pass: html.includes('id="bucket-list"') && html.includes('id="bucketTrackerCard"') && html.includes('id="bucketProgressBar"') && html.includes('id="bucketGrid"') },
+  { name: 'Venue seating architecture SVG visualizer card in booking modal', pass: html.includes('class="venue-visualizer-card"') && html.includes('class="venue-svg"') && html.includes('class="v-tier-zone') },
+  { name: 'Dynamic Group Discount line (Cultural Circle & Royal Syndicate)', pass: html.includes('id="summaryDiscountRow"') && html.includes('id="summaryDiscountLabel"') && html.includes('id="summaryDiscountVal"') },
+  { name: 'Acoustic Atmosphere Synthesizer dock with Web Audio visualizer', pass: html.includes('id="soundscapeDock"') && html.includes('id="soundscapeVisualizer"') && html.includes('id="soundscapePlayBtn"') },
   { name: 'Curator spotlight card with Indian event', pass: html.includes('Ragas & Resonances') },
   { name: 'Editorial banner for Bengaluru DeepTech', pass: html.includes('Bengaluru DeepTech & AI Nexus 2026') },
   { name: 'Modal dialog: Event Details', pass: html.includes('id="eventDetailsModal"') },
@@ -72,6 +77,43 @@ events.forEach(evt => {
   }
 });
 console.log(`[DATA] PASS - All ${events.length} events verified with valid Indian cities, ₹ INR tiers, and local photographic assets.`);
+
+// 2.5. Validate 100 Things to Do in Bharat dataset
+const { BHARAT_100_EXPERIENCES } = require('./bharat100Data.js');
+if (!Array.isArray(BHARAT_100_EXPERIENCES) || BHARAT_100_EXPERIENCES.length !== 100) {
+  console.error(`[BHARAT-100] FAIL - Expected exactly 100 experiences, found ${BHARAT_100_EXPERIENCES ? BHARAT_100_EXPERIENCES.length : 0}`);
+  allPassed = false;
+} else {
+  console.log(`[BHARAT-100] PASS - Exactly 100 authentic Indian experiences verified in dataset`);
+}
+
+const validRegions = new Set(['North', 'South', 'West', 'East', 'Himalayas', 'Central']);
+const validCategories = new Set([
+  'Spiritual & Chants',
+  'Palaces & Heritage',
+  'Living Crafts & Heritage',
+  'Coastal & Waters',
+  'Himalayan Heights',
+  'Festivals & Music',
+  'Royal Gastronomy',
+  'Frontier Tech & Modern'
+]);
+
+BHARAT_100_EXPERIENCES.forEach((item, idx) => {
+  if (!item.id || !item.title || !item.city || !item.state || !item.desc || !item.bestSeason || !item.tag) {
+    console.error(`[BHARAT-100] FAIL - Missing required fields on item #${idx + 1}`);
+    allPassed = false;
+  }
+  if (!validRegions.has(item.region)) {
+    console.error(`[BHARAT-100] FAIL - Invalid region "${item.region}" on item #${idx + 1}`);
+    allPassed = false;
+  }
+  if (!validCategories.has(item.category)) {
+    console.error(`[BHARAT-100] FAIL - Invalid category "${item.category}" on item #${idx + 1}`);
+    allPassed = false;
+  }
+});
+console.log(`[BHARAT-100] PASS - All 100 items verified across 6 Indian regions & 8 cultural categories`);
 
 // 3. Test Filter Logic
 const techEvents = events.filter(e => e.category === 'Technology');

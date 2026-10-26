@@ -13,7 +13,8 @@
   const STORAGE_KEYS = {
     SAVED_EVENTS: 'eventra_in_saved_v1',
     BOOKINGS: 'eventra_in_bookings_v1',
-    THEME: 'eventra_theme_v1'
+    THEME: 'eventra_theme_v1',
+    BUCKET_LIST: 'eventra_bucket_list_v1'
   };
 
   const PLATFORM_FEE_INR = 99; // ₹99 simulated GST & digital issuance fee
@@ -428,11 +429,27 @@
     savedEventIds: new Set(),
     bookings: [],
     theme: 'light',
+    // 100 Things to Do in Bharat State
+    bucketSavedIds: new Set(),
+    bucketFilters: {
+      search: '',
+      category: 'all',
+      region: 'all',
+      onlySaved: false
+    },
+    // Cultural Atlas State
+    activeAtlasZone: 'north',
+    // Acoustic Soundscape Synthesizer State
+    soundscapePlaying: false,
+    soundscapeTone: 'tanpura',
+    soundscapeVolume: 0.35,
     // Active Booking Draft state
     activeBookingDraft: {
       event: null,
       selectedTierIndex: 0,
       quantity: 1,
+      discountPercent: 0,
+      discountAmount: 0,
       attendeeName: 'Aarav Sharma',
       attendeeEmail: 'aarav.sharma@eventra.in',
       attendeePhone: '+91 98765 43210'
@@ -515,6 +532,20 @@
       console.warn('Eventra India: Resetting bookings.', e);
       state.bookings = [];
     }
+
+    // 4. Bharat 100 Quest Checklist
+    try {
+      const rawBucket = localStorage.getItem(STORAGE_KEYS.BUCKET_LIST);
+      if (rawBucket) {
+        const parsed = JSON.parse(rawBucket);
+        if (Array.isArray(parsed)) {
+          state.bucketSavedIds = new Set(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Eventra India: Resetting bucket list quest.', e);
+      state.bucketSavedIds = new Set();
+    }
   }
 
   function saveSavedEventsToStorage() {
@@ -530,6 +561,14 @@
       localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(state.bookings));
     } catch (e) {
       console.error('Eventra India: Failed to persist bookings.', e);
+    }
+  }
+
+  function saveBucketListToStorage() {
+    try {
+      localStorage.setItem(STORAGE_KEYS.BUCKET_LIST, JSON.stringify(Array.from(state.bucketSavedIds)));
+    } catch (e) {
+      console.error('Eventra India: Failed to persist bucket list quest.', e);
     }
   }
 
@@ -1322,6 +1361,880 @@
   }
 
   // =========================================================================
+  // CULTURAL ATLAS CONTROLLER & REGIONAL VISUALIZER
+  // =========================================================================
+  const ATLAS_REGIONS_DATA = {
+    north: {
+      id: 'north',
+      name: 'Northern Plains & Heritage',
+      sanskritName: 'Aryavarta & Ganga-Jamuni Tehzeeb',
+      color: '#E07A5F',
+      cities: ['Delhi NCR', 'Jaipur', 'Varanasi', 'Agra', 'Lucknow'],
+      acoustic: 'Hindustani Classical (Dhrupad & Khayal), Shehnai of Banaras, Nizamuddin Sufi Qawwali',
+      gastronomy: 'Awadhi Dum Pukht, Banarasi Tamatar Chaat, Rajasthani Dal Baati Churma, Malaiyyo',
+      architecture: 'Mughal red sandstone & white marble, Rajput jharokhas, ancient river ghat stepwells',
+      curatedGatherings: 4,
+      targetCity: 'Varanasi',
+      description: 'The historic heartland where sacred rivers flow past thousand-year-old ghats, imperial forts rise above desert sands, and classical ragas echo through marble courtyards.',
+      highlights: [
+        'Varanasi Subah-e-Banaras Dawn Raga & Bajra Boat Recitals on the Ganga',
+        'Jaipur Literature Festival & Amber Palace Midnight Astronomy',
+        'Dargah Nizamuddin Sufi Qawwali Under 700-Year-Old Banyan Trees',
+        'Lucknow Kathak Samaroh & Awadhi Nawabi Dastarkhān Feast'
+      ]
+    },
+    south: {
+      id: 'south',
+      name: 'Deccan Plateau & Dravidian Frontiers',
+      sanskritName: 'Dakshinapatha & Carnatic Sanctum',
+      color: '#3D5A80',
+      cities: ['Bengaluru', 'Hyderabad', 'Kochi', 'Chennai', 'Madurai'],
+      acoustic: 'Carnatic Vocal Sangeet, Saraswati Veena, Mridangam, Sopana Sangeetham, Kerala Chenda Melam',
+      gastronomy: 'Hyderabadi Dum Biryani, Kerala Sadhya on banana leaf, Traditional Filter Kaapi, Chettinad Pepper Crab',
+      architecture: 'Chola soaring gopurams, Hoysala soapstone filigree, Kerala timber roof pagodas',
+      curatedGatherings: 5,
+      targetCity: 'Bengaluru',
+      description: 'An unbroken cradle of classical sangeet, sacred temple architecture, coastal spice trade routes, and modern silicon technology hubs.',
+      highlights: [
+        'Bengaluru DeepTech & AI Conclave at Palace Grounds',
+        'Kochi-Muziris Biennale Contemporary Arts at Aspinwall House',
+        'Hyderabad Chowmahalla Royal Nizam Culinary Banquet',
+        'Thanjavur Brihadisvara Shadowless Vimana at High Noon'
+      ]
+    },
+    west: {
+      id: 'west',
+      name: 'Western Gateway & Arabian Seaboard',
+      sanskritName: 'Aparanta & Sahyadri Splendour',
+      color: '#F4A261',
+      cities: ['Mumbai', 'Goa', 'Ahmedabad', 'Pune', 'Rann of Kutch'],
+      acoustic: 'Marathi Natyasangeet, Goan Fado, Gujarati Garba & Dhol rhythms, Bombay Jazz heritage',
+      gastronomy: 'Malvani seafood curry, Goan Kokum Prawn Balchão, Gujarati Thali, Mumbai Parsi Akuri',
+      architecture: 'Victorian Gothic & Art Deco Mumbai, Portuguese Latin Quarters (Fontainhas), Stepwells of Adalaj',
+      curatedGatherings: 3,
+      targetCity: 'Mumbai',
+      description: 'From Mumbai’s oceanfront Art Deco and NCPA concert halls to Goa’s sun-drenched colonial villas and the glowing white salt flats of Kutch.',
+      highlights: [
+        'NCPA Tata Theatre: Ragas & Modular Synthesis Ensemble',
+        'Fontainhas Latin Quarter Architectural & Fado Walking Salon',
+        'White Rann of Kutch Full Moon Campfire & Kutchi Embroidery Guild',
+        'Bandra-Worli Sea Link Midnight Coastal Ultra Marathon'
+      ]
+    },
+    east: {
+      id: 'east',
+      name: 'Eastern Delta & Renaissance Heritage',
+      sanskritName: 'Purvanchal & Bengal Renaissance',
+      color: '#2A9D8F',
+      cities: ['Kolkata', 'Darjeeling', 'Puri', 'Bhubaneswar', 'Guwahati'],
+      acoustic: 'Rabindra Sangeet, Baul mystical folk, Bishnupur Gharana, Odissi Mardala beats',
+      gastronomy: 'Bengali Shorshe Ilish, Kosha Mangsho, Mishti Doi, Chhena Poda of Odisha, Assam Orthodox Tea',
+      architecture: 'Colonial British neoclassicism, terracotta temples of Bishnupur, Kalinga stone spires',
+      curatedGatherings: 2,
+      targetCity: 'Kolkata',
+      description: 'Intellectual and artistic crucible of poets, philosophers, terracotta artisans, and tea planters framing the Bay of Bengal.',
+      highlights: [
+        'Kolkata Heritage Tram Ride & College Street Coffee House Intellectual Adda',
+        'UNESCO Darjeeling Himalayan Toy Train Steam Whistle Journey',
+        'Puri Jagannath Grand Chariot Procession & Sea Beach Morning Ritual',
+        'Majuli Island Vaishnavite Satras & Mask Making Sanctuary'
+      ]
+    },
+    himalayas: {
+      id: 'himalayas',
+      name: 'Himalayan Heights & Sacred Valleys',
+      sanskritName: 'Devbhumi & Trans-Himalayan Peaks',
+      color: '#4658F5',
+      cities: ['Ladakh (Leh)', 'Rishikesh', 'Srinagar', 'Dharamshala', 'Spiti'],
+      acoustic: 'Tibetan Buddhist monastic chanting, Himalayan singing bowls, Kashmiri Santoor, Ganga Aarti bells',
+      gastronomy: 'Ladakhi Thukpa & Skyu, Kashmiri Wazwan & Kahwa with Saffron, Pahadi Kumaoni Bhatt ki Churkani',
+      architecture: 'Tibetan fortress gompas (Thiksey, Hemis), Kashmiri carved cedar houseboats, stone-slate pahadi homes',
+      curatedGatherings: 2,
+      targetCity: 'Ladakh (Leh)',
+      description: 'The roof of the subcontinent with snow-capped ridges, ancient Buddhist monastic libraries, sacred river confluences, and quiet mountain contemplation.',
+      highlights: [
+        'Hanle Dark Sky Reserve & Pangong Tso Stargazing Expedition',
+        'Rishikesh Parmarth Niketan Ganga Aarti & Yogic Meditation at Twilight',
+        'Dal Lake Kashmiri Shikara Sunrise Saffron & Lotus Floating Market',
+        'Hemis Monastery Masked Sacred Cham Dance Festival'
+      ]
+    },
+    central: {
+      id: 'central',
+      name: 'Central Heartlands & Bundelkhand',
+      sanskritName: 'Madhya Desha & Forest Sanctuaries',
+      color: '#9C6644',
+      cities: ['Bhopal', 'Khajuraho', 'Gwalior', 'Indore', 'Orchha'],
+      acoustic: 'Gwalior Gharana (oldest Hindustani vocal lineage), Bundeli folk ballads, Gond tribal chants',
+      gastronomy: 'Indori Poha Jalebi at Sarafa Bazaar, Bhopali Gosht Korma, Gwalior Morena Gajak, Dal Bafla with Pure Ghee',
+      architecture: 'UNESCO sandstone temples of Khajuraho, medieval Orchha cenotaphs, rock shelters of Bhimbetka',
+      curatedGatherings: 2,
+      targetCity: 'Jaipur',
+      description: 'The geographic and historical heartland of India, housing pre-historic cave paintings, royal cenotaphs along the Betwa, and legendary music gharanas.',
+      highlights: [
+        'Khajuraho Dance Festival Under Floodlit 10th-Century Sandstone Temples',
+        'Gwalior Fort Tansen Music Samaroh Under the Historic Tamarind Tree',
+        'Orchha Cenotaphs at Sunset on the Betwa River',
+        'Bhimbetka Prehistoric Rock Shelters & Ancient Ochre Cave Murals'
+      ]
+    }
+  };
+
+  function renderAtlasInspector(zoneKey) {
+    const data = ATLAS_REGIONS_DATA[zoneKey] || ATLAS_REGIONS_DATA.north;
+    state.activeAtlasZone = zoneKey;
+
+    // Update SVG zones styling
+    document.querySelectorAll('.map-zone').forEach(zone => {
+      const zId = zone.getAttribute('data-zone');
+      zone.classList.toggle('active', zId === zoneKey);
+    });
+
+    // Update Tabs styling
+    document.querySelectorAll('.atlas-tab').forEach(tab => {
+      const tId = tab.getAttribute('data-zone');
+      tab.classList.toggle('active', tId === zoneKey);
+    });
+
+    // Populate Inspector Card
+    const inspector = document.getElementById('atlasInspector');
+    if (!inspector) return;
+
+    inspector.innerHTML = `
+      <div class="inspector-header">
+        <div class="inspector-badge-row">
+          <span class="inspector-sanskrit">${escapeHtml(data.sanskritName)}</span>
+          <span class="inspector-events-badge">${data.curatedGatherings} Active Season Events</span>
+        </div>
+        <h3 class="inspector-title">${escapeHtml(data.name)}</h3>
+        <p class="inspector-desc">${escapeHtml(data.description)}</p>
+      </div>
+
+      <div class="inspector-meta-grid">
+        <div class="inspector-meta-item">
+          <span class="meta-label">Acoustic Tradition</span>
+          <span class="meta-val">${escapeHtml(data.acoustic)}</span>
+        </div>
+        <div class="inspector-meta-item">
+          <span class="meta-label">Gastronomic Roots</span>
+          <span class="meta-val">${escapeHtml(data.gastronomy)}</span>
+        </div>
+        <div class="inspector-meta-item">
+          <span class="meta-label">Architecture</span>
+          <span class="meta-val">${escapeHtml(data.architecture)}</span>
+        </div>
+        <div class="inspector-meta-item">
+          <span class="meta-label">Cultural Hubs</span>
+          <div class="hub-chips">
+            ${data.cities.map(c => `<button type="button" class="hub-chip" data-city-chip="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="inspector-highlights">
+        <span class="highlights-title">Signature Regional Highlights</span>
+        <ul class="highlights-list">
+          ${data.highlights.map(h => `<li><span class="bullet-star">✦</span> <span>${escapeHtml(h)}</span></li>`).join('')}
+        </ul>
+      </div>
+
+      <div class="inspector-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="atlasExploreZoneBtn">
+          <span>Explore Zone Gatherings</span>
+          <svg class="icon icon-sm"><use href="#icon-arrow-right"/></svg>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="atlasViewBucketBtn">
+          <span>View 100 Things in ${escapeHtml(data.name.split(' ')[0])}</span>
+        </button>
+      </div>
+    `;
+
+    // Bind action buttons
+    const exploreBtn = document.getElementById('atlasExploreZoneBtn');
+    if (exploreBtn) {
+      exploreBtn.onclick = () => {
+        const citySelect = document.getElementById('filterCity');
+        if (citySelect) {
+          const opt = Array.from(citySelect.options).find(o => o.value.toLowerCase() === data.targetCity.toLowerCase());
+          if (opt) {
+            state.filters.city = opt.value;
+            citySelect.value = opt.value;
+          } else {
+            state.filters.city = 'all';
+            citySelect.value = 'all';
+          }
+        }
+        renderEventsGrid();
+        document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });
+      };
+    }
+
+    const bucketBtn = document.getElementById('atlasViewBucketBtn');
+    if (bucketBtn) {
+      bucketBtn.onclick = () => {
+        const regionKey = zoneKey.charAt(0).toUpperCase() + zoneKey.slice(1);
+        const regionSelect = document.getElementById('bucketRegionSelect');
+        if (regionSelect) {
+          regionSelect.value = regionKey;
+          state.bucketFilters.region = regionKey;
+        }
+        renderBucketList();
+        document.getElementById('bucket-list').scrollIntoView({ behavior: 'smooth' });
+      };
+    }
+
+    // Bind hub chip clicks
+    inspector.querySelectorAll('[data-city-chip]').forEach(chip => {
+      chip.onclick = () => {
+        const cityName = chip.getAttribute('data-city-chip');
+        const citySelect = document.getElementById('filterCity');
+        if (citySelect) {
+          const match = Array.from(citySelect.options).find(o => o.value.toLowerCase() === cityName.toLowerCase());
+          if (match) {
+            state.filters.city = match.value;
+            citySelect.value = match.value;
+          } else {
+            state.filters.city = 'all';
+            citySelect.value = 'all';
+            state.filters.search = cityName;
+            const catInp = document.getElementById('catalogueSearchInput');
+            if (catInp) catInp.value = cityName;
+          }
+          renderEventsGrid();
+          document.getElementById('explore').scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+    });
+  }
+
+  function initCulturalAtlas() {
+    // Map zones click
+    document.querySelectorAll('.map-zone').forEach(zone => {
+      zone.addEventListener('click', () => {
+        const zId = zone.getAttribute('data-zone');
+        if (zId) renderAtlasInspector(zId);
+      });
+      zone.setAttribute('tabindex', '0');
+      zone.setAttribute('role', 'button');
+      zone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const zId = zone.getAttribute('data-zone');
+          if (zId) renderAtlasInspector(zId);
+        }
+      });
+    });
+
+    // Map pins click
+    document.querySelectorAll('.map-pin').forEach(pin => {
+      pin.addEventListener('click', () => {
+        const cityName = pin.getAttribute('data-city');
+        if (!cityName) return;
+        for (const [key, data] of Object.entries(ATLAS_REGIONS_DATA)) {
+          if (data.cities.some(c => c.toLowerCase().includes(cityName.toLowerCase()) || cityName.toLowerCase().includes(c.toLowerCase()))) {
+            renderAtlasInspector(key);
+            break;
+          }
+        }
+      });
+    });
+
+    // Tabs click
+    document.querySelectorAll('.atlas-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const zId = tab.getAttribute('data-zone');
+        if (zId) renderAtlasInspector(zId);
+      });
+    });
+
+    // Initial render
+    renderAtlasInspector('north');
+  }
+
+  // =========================================================================
+  // 100 THINGS TO DO IN BHARAT CONTROLLER & QUEST TRACKER
+  // =========================================================================
+  function getBucketRank(count) {
+    if (count >= 100) return { title: 'Bharat Mahasabha Legend', icon: '🌟' };
+    if (count >= 75) return { title: 'Grand Yatri Maestro', icon: '👑' };
+    if (count >= 50) return { title: 'Bharat Heritage Scholar', icon: '📜' };
+    if (count >= 30) return { title: 'Subcontinent Explorer', icon: '🧭' };
+    if (count >= 15) return { title: 'Cultural Connoisseur', icon: '🪷' };
+    if (count >= 5) return { title: 'Dharma Pilgrim', icon: '🕉️' };
+    return { title: 'Curious Seeker', icon: '🏛️' };
+  }
+
+  function updateBucketTracker() {
+    const count = state.bucketSavedIds.size;
+    const total = 100;
+    const pct = Math.min(100, Math.round((count / total) * 100));
+    const rank = getBucketRank(count);
+
+    const savedCountEl = document.getElementById('bucketSavedCount');
+    const toggleCountEl = document.getElementById('bucketToggleCount');
+    const percentEl = document.getElementById('bucketPercentText');
+    const progressBar = document.getElementById('bucketProgressBar');
+    const rankTitle = document.getElementById('bucketRankTitle');
+    const rankIcon = document.getElementById('bucketRankIcon');
+
+    if (savedCountEl) savedCountEl.textContent = count;
+    if (toggleCountEl) toggleCountEl.textContent = count;
+    if (percentEl) percentEl.textContent = `${pct}% Explored`;
+    if (progressBar) progressBar.style.width = `${pct}%`;
+    if (rankTitle) rankTitle.textContent = rank.title;
+    if (rankIcon) rankIcon.textContent = rank.icon;
+
+    // Header badge
+    const headerBadge = document.getElementById('bucketCountBadge');
+    if (headerBadge) {
+      if (count > 0) {
+        headerBadge.textContent = `${count}/100`;
+        headerBadge.classList.add('has-saved');
+      } else {
+        headerBadge.textContent = '100';
+        headerBadge.classList.remove('has-saved');
+      }
+    }
+  }
+
+  function toggleBucketItem(itemId) {
+    const all = (typeof window !== 'undefined' && window.BHARAT_100_EXPERIENCES) ? window.BHARAT_100_EXPERIENCES : [];
+    const item = all.find(x => x.id === itemId);
+    const title = item ? item.title : itemId;
+
+    let isSaved = false;
+    if (state.bucketSavedIds.has(itemId)) {
+      state.bucketSavedIds.delete(itemId);
+      showToast(`Removed from your Bharat Quest: "${title.slice(0, 36)}..."`, 'info', 2500);
+    } else {
+      state.bucketSavedIds.add(itemId);
+      isSaved = true;
+      showToast(`★ Added to your Bharat Quest: "${title.slice(0, 36)}..."`, 'success', 2500);
+    }
+
+    saveBucketListToStorage();
+    updateBucketTracker();
+    renderBucketList();
+  }
+
+  function renderBucketList() {
+    const grid = document.getElementById('bucketGrid');
+    const empty = document.getElementById('bucketEmptyState');
+    const counter = document.getElementById('bucketResultsCount');
+    if (!grid) return;
+
+    const all = (typeof window !== 'undefined' && window.BHARAT_100_EXPERIENCES) ? window.BHARAT_100_EXPERIENCES : [];
+    const search = (state.bucketFilters.search || '').toLowerCase().trim();
+    const cat = state.bucketFilters.category || 'all';
+    const reg = state.bucketFilters.region || 'all';
+    const onlySaved = !!state.bucketFilters.onlySaved;
+
+    const filtered = all.filter(item => {
+      // Search
+      if (search) {
+        const matchTitle = item.title && item.title.toLowerCase().includes(search);
+        const matchCity = item.city && item.city.toLowerCase().includes(search);
+        const matchState = item.state && item.state.toLowerCase().includes(search);
+        const matchTag = item.tag && item.tag.toLowerCase().includes(search);
+        const matchDesc = item.desc && item.desc.toLowerCase().includes(search);
+        const matchSeason = item.bestSeason && item.bestSeason.toLowerCase().includes(search);
+        if (!matchTitle && !matchCity && !matchState && !matchTag && !matchDesc && !matchSeason) {
+          return false;
+        }
+      }
+
+      // Category
+      if (cat !== 'all' && item.category !== cat) {
+        return false;
+      }
+
+      // Region
+      if (reg !== 'all' && item.region.toLowerCase() !== reg.toLowerCase()) {
+        return false;
+      }
+
+      // Only saved
+      if (onlySaved && !state.bucketSavedIds.has(item.id)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    if (counter) {
+      counter.textContent = `Showing ${filtered.length} of ${all.length} experiences`;
+    }
+
+    if (filtered.length === 0) {
+      grid.style.display = 'none';
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+
+    if (empty) empty.style.display = 'none';
+    grid.style.display = 'grid';
+
+    grid.innerHTML = filtered.map(item => {
+      const isSaved = state.bucketSavedIds.has(item.id);
+      const padNum = String(item.num).padStart(3, '0');
+      const relatedEvent = item.relatedEventId ? state.events.find(e => e.id === item.relatedEventId) : null;
+
+      return `
+        <article class="bucket-card ${isSaved ? 'saved' : ''}" data-bucket-id="${item.id}">
+          <div class="bucket-card-top">
+            <span class="bucket-num">#${padNum}</span>
+            <div class="bucket-top-badges">
+              <span class="bucket-region-badge region-${item.region.toLowerCase()}">${escapeHtml(item.region)}</span>
+              <span class="bucket-cat-badge">${escapeHtml(item.category)}</span>
+            </div>
+            <button type="button" class="btn-save-bucket ${isSaved ? 'active' : ''}" data-bucket-save="${item.id}" aria-label="${isSaved ? 'Remove from quest' : 'Save to quest'}" title="${isSaved ? 'Remove from quest' : 'Save to quest'}">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" fill="${isSaved ? 'var(--accent-coral)' : 'none'}" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </button>
+          </div>
+
+          <h3 class="bucket-card-title">${escapeHtml(item.title)}</h3>
+
+          <div class="bucket-location-row">
+            <svg class="icon icon-sm location-icon"><use href="#icon-map-pin"/></svg>
+            <span class="location-text">${escapeHtml(item.city)}, ${escapeHtml(item.state)}</span>
+          </div>
+
+          <div class="bucket-season-row">
+            <span class="season-badge">Season: ${escapeHtml(item.bestSeason)}</span>
+            <span class="tag-badge">✦ ${escapeHtml(item.tag)}</span>
+          </div>
+
+          <p class="bucket-card-desc">${escapeHtml(item.desc)}</p>
+
+          <div class="bucket-card-footer">
+            <button type="button" class="btn-quest-toggle ${isSaved ? 'is-saved' : ''}" data-bucket-action="${item.id}">
+              <span class="quest-check-icon">${isSaved ? '✓' : '+'}</span>
+              <span>${isSaved ? 'Explored & Saved' : 'Mark Explored'}</span>
+            </button>
+            ${relatedEvent ? `
+              <button type="button" class="btn-book-related" data-book-related="${relatedEvent.id}" title="Book curated festival tickets">
+                <span>Book Live Passes (₹)</span>
+                <svg class="icon icon-xs"><use href="#icon-arrow-right"/></svg>
+              </button>
+            ` : ''}
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    // Bind item actions
+    grid.querySelectorAll('[data-bucket-save]').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-bucket-save');
+        toggleBucketItem(id);
+      };
+    });
+
+    grid.querySelectorAll('[data-bucket-action]').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-bucket-action');
+        toggleBucketItem(id);
+      };
+    });
+
+    grid.querySelectorAll('[data-book-related]').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const evtId = btn.getAttribute('data-book-related');
+        startBookingFlow(evtId);
+      };
+    });
+  }
+
+  function initBucketList() {
+    const searchInp = document.getElementById('bucketSearchInput');
+    const clearSearchBtn = document.getElementById('bucketClearSearch');
+    const regionSelect = document.getElementById('bucketRegionSelect');
+    const onlySavedCheck = document.getElementById('bucketOnlySavedCheck');
+    const exportBtn = document.getElementById('bucketExportBtn');
+
+    if (searchInp) {
+      searchInp.addEventListener('input', (e) => {
+        state.bucketFilters.search = e.target.value;
+        if (clearSearchBtn) {
+          clearSearchBtn.style.display = e.target.value.trim().length > 0 ? 'inline-flex' : 'none';
+        }
+        renderBucketList();
+      });
+    }
+
+    if (clearSearchBtn) {
+      clearSearchBtn.onclick = () => {
+        state.bucketFilters.search = '';
+        if (searchInp) {
+          searchInp.value = '';
+          searchInp.focus();
+        }
+        clearSearchBtn.style.display = 'none';
+        renderBucketList();
+      };
+    }
+
+    document.querySelectorAll('.bkt-cat-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.bkt-cat-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        state.bucketFilters.category = pill.getAttribute('data-category');
+        renderBucketList();
+      });
+    });
+
+    if (regionSelect) {
+      regionSelect.addEventListener('change', (e) => {
+        state.bucketFilters.region = e.target.value;
+        renderBucketList();
+      });
+    }
+
+    if (onlySavedCheck) {
+      onlySavedCheck.addEventListener('change', (e) => {
+        state.bucketFilters.onlySaved = e.target.checked;
+        renderBucketList();
+      });
+    }
+
+    if (exportBtn) {
+      exportBtn.onclick = () => {
+        const all = (typeof window !== 'undefined' && window.BHARAT_100_EXPERIENCES) ? window.BHARAT_100_EXPERIENCES : [];
+        const savedList = all.filter(x => state.bucketSavedIds.has(x.id));
+        if (savedList.length === 0) {
+          showToast('Save at least 1 experience to export your personal checklist!', 'warning');
+          return;
+        }
+
+        window.print();
+      };
+    }
+
+    updateBucketTracker();
+    renderBucketList();
+  }
+
+  // =========================================================================
+  // ACOUSTIC SOUNDSCAPE SYNTHESIZER (WEB AUDIO API)
+  // Procedural, Client-Side Indian Atmospheric Soundscape Engine
+  // =========================================================================
+  let audioContext = null;
+  let masterSoundGain = null;
+  let soundAnalyser = null;
+  let currentSoundNodes = [];
+  let visualizerAnimId = null;
+
+  function initAudioContext() {
+    if (!audioContext) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        audioContext = new AudioCtx();
+        masterSoundGain = audioContext.createGain();
+        masterSoundGain.gain.setValueAtTime(state.soundscapeVolume, audioContext.currentTime);
+
+        soundAnalyser = audioContext.createAnalyser();
+        soundAnalyser.fftSize = 64;
+
+        masterSoundGain.connect(soundAnalyser);
+        soundAnalyser.connect(audioContext.destination);
+      }
+    }
+    if (audioContext && audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+  }
+
+  function stopSoundscape() {
+    currentSoundNodes.forEach(node => {
+      try {
+        if (node.stop) node.stop();
+        if (node.disconnect) node.disconnect();
+      } catch (e) {}
+    });
+    currentSoundNodes = [];
+    state.soundscapePlaying = false;
+
+    const playBtn = document.getElementById('soundscapePlayBtn');
+    const playIcon = document.getElementById('soundIconPlay');
+    const pauseIcon = document.getElementById('soundIconPause');
+
+    if (playBtn) playBtn.classList.remove('playing');
+    if (playIcon) playIcon.style.display = 'block';
+    if (pauseIcon) pauseIcon.style.display = 'none';
+
+    drawSoundVisualizerFlat();
+  }
+
+  function startSoundscape(toneKey) {
+    initAudioContext();
+    if (!audioContext || !masterSoundGain) return;
+
+    stopSoundscape();
+
+    const now = audioContext.currentTime;
+
+    if (toneKey === 'tanpura') {
+      // Authentic Indian Drone: Sa (130.81Hz), Pa (196Hz), Sa Octave (261.63Hz) + slight detune for chorus
+      const freqs = [130.81, 196.00, 261.63, 262.10];
+      const filter = audioContext.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1400, now);
+      filter.Q.setValueAtTime(3, now);
+
+      // LFO for characteristic Tanpura buzzing shimmer (Javari bridge)
+      const lfo = audioContext.createOscillator();
+      const lfoGain = audioContext.createGain();
+      lfo.frequency.setValueAtTime(0.25, now);
+      lfoGain.gain.setValueAtTime(450, now);
+      lfo.connect(filter.frequency);
+      lfo.start(now);
+      currentSoundNodes.push(lfo, lfoGain);
+
+      freqs.forEach((freq, idx) => {
+        const osc = audioContext.createOscillator();
+        const oscGain = audioContext.createGain();
+        osc.type = idx % 2 === 0 ? 'sawtooth' : 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+
+        const baseGain = idx === 0 ? 0.35 : (idx === 1 ? 0.28 : 0.22);
+        oscGain.gain.setValueAtTime(0.001, now);
+        oscGain.gain.exponentialRampToValueAtTime(baseGain, now + 1.5);
+
+        osc.connect(oscGain);
+        oscGain.connect(filter);
+        osc.start(now);
+        currentSoundNodes.push(osc, oscGain);
+      });
+
+      filter.connect(masterSoundGain);
+      currentSoundNodes.push(filter);
+
+    } else if (toneKey === 'singing-bowl') {
+      // 432Hz Himalayan Singing Bowl with harmonic overtones and ringing resonance
+      const bowlFreqs = [432, 864, 1296, 2160];
+      const bowlGains = [0.45, 0.20, 0.12, 0.05];
+
+      bowlFreqs.forEach((freq, i) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+
+        // Modulate slightly for bowl warble
+        const warble = audioContext.createOscillator();
+        const warbleGain = audioContext.createGain();
+        warble.frequency.setValueAtTime(1.2, now);
+        warbleGain.gain.setValueAtTime(1.5, now);
+        warble.connect(osc.frequency);
+        warble.start(now);
+        currentSoundNodes.push(warble, warbleGain);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(bowlGains[i], now + 2.0);
+
+        osc.connect(gain);
+        gain.connect(masterSoundGain);
+        osc.start(now);
+        currentSoundNodes.push(osc, gain);
+      });
+
+    } else if (toneKey === 'ocean-swell') {
+      // Goa Arabian Sea Waves: Filtered Pink Noise with tidal wave LFO
+      const bufferSize = audioContext.sampleRate * 3;
+      const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+        b6 = white * 0.115926;
+      }
+
+      const whiteNoise = audioContext.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+      whiteNoise.loop = true;
+
+      const seaFilter = audioContext.createBiquadFilter();
+      seaFilter.type = 'lowpass';
+      seaFilter.frequency.setValueAtTime(400, now);
+      seaFilter.Q.setValueAtTime(2.5, now);
+
+      // Tidal swell LFO (1 wave every ~8 seconds)
+      const swellLfo = audioContext.createOscillator();
+      const swellGain = audioContext.createGain();
+      swellLfo.frequency.setValueAtTime(0.125, now);
+      swellGain.gain.setValueAtTime(320, now);
+      swellLfo.connect(seaFilter.frequency);
+      swellLfo.start(now);
+
+      const seaVolumeGain = audioContext.createGain();
+      seaVolumeGain.gain.setValueAtTime(0.001, now);
+      seaVolumeGain.gain.exponentialRampToValueAtTime(0.65, now + 1.5);
+
+      whiteNoise.connect(seaFilter);
+      seaFilter.connect(seaVolumeGain);
+      seaVolumeGain.connect(masterSoundGain);
+      whiteNoise.start(now);
+
+      currentSoundNodes.push(whiteNoise, seaFilter, swellLfo, swellGain, seaVolumeGain);
+
+    } else if (toneKey === 'deeptech-pulse') {
+      // Bengaluru Underground: 55Hz Sub-bass drone + subtle resonant clock tick
+      const subOsc = audioContext.createOscillator();
+      const subGain = audioContext.createGain();
+      subOsc.type = 'sine';
+      subOsc.frequency.setValueAtTime(55, now);
+      subGain.gain.setValueAtTime(0.001, now);
+      subGain.gain.exponentialRampToValueAtTime(0.40, now + 1.0);
+
+      subOsc.connect(subGain);
+      subGain.connect(masterSoundGain);
+      subOsc.start(now);
+      currentSoundNodes.push(subOsc, subGain);
+
+      const pulseFilter = audioContext.createBiquadFilter();
+      pulseFilter.type = 'bandpass';
+      pulseFilter.frequency.setValueAtTime(800, now);
+      pulseFilter.Q.setValueAtTime(4, now);
+
+      const pulseLfo = audioContext.createOscillator();
+      const pulseLfoGain = audioContext.createGain();
+      pulseLfo.type = 'sawtooth';
+      pulseLfo.frequency.setValueAtTime(2, now);
+      pulseLfoGain.gain.setValueAtTime(300, now);
+      pulseLfo.connect(pulseFilter.frequency);
+      pulseLfo.start(now);
+
+      pulseFilter.connect(masterSoundGain);
+      currentSoundNodes.push(pulseFilter, pulseLfo, pulseLfoGain);
+    }
+
+    state.soundscapePlaying = true;
+    state.soundscapeTone = toneKey;
+
+    const playBtn = document.getElementById('soundscapePlayBtn');
+    const playIcon = document.getElementById('soundIconPlay');
+    const pauseIcon = document.getElementById('soundIconPause');
+
+    if (playBtn) playBtn.classList.add('playing');
+    if (playIcon) playIcon.style.display = 'none';
+    if (pauseIcon) pauseIcon.style.display = 'block';
+
+    startSoundVisualizerAnim();
+  }
+
+  function drawSoundVisualizerFlat() {
+    if (visualizerAnimId) {
+      cancelAnimationFrame(visualizerAnimId);
+      visualizerAnimId = null;
+    }
+    const canvas = document.getElementById('soundscapeVisualizer');
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#4658F5';
+    const barW = 3;
+    const gap = 3;
+    for (let i = 0; i < 4; i++) {
+      ctx.fillRect(8 + i * (barW + gap), 10, barW, 2);
+    }
+  }
+
+  function startSoundVisualizerAnim() {
+    const canvas = document.getElementById('soundscapeVisualizer');
+    if (!canvas || !canvas.getContext || !soundAnalyser) return;
+    const ctx = canvas.getContext('2d');
+    const dataArray = new Uint8Array(soundAnalyser.frequencyBinCount);
+
+    function renderFrame() {
+      if (!state.soundscapePlaying) {
+        drawSoundVisualizerFlat();
+        return;
+      }
+
+      visualizerAnimId = requestAnimationFrame(renderFrame);
+      soundAnalyser.getByteFrequencyData(dataArray);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#4658F5';
+
+      const barW = 4;
+      const gap = 3;
+      const count = 4;
+
+      for (let i = 0; i < count; i++) {
+        const val = dataArray[i * 2] || 30;
+        const barH = Math.max(3, Math.min(13, (val / 255) * 14));
+        const y = canvas.height - barH;
+        ctx.fillRect(6 + i * (barW + gap), y, barW, barH);
+      }
+    }
+
+    renderFrame();
+  }
+
+  function initSoundscapeSynthesizer() {
+    const playBtn = document.getElementById('soundscapePlayBtn');
+    const toneSelect = document.getElementById('soundscapeToneSelect');
+    const volInput = document.getElementById('soundscapeVol');
+    const closeBtn = document.getElementById('soundscapeClose');
+    const dock = document.getElementById('soundscapeDock');
+
+    if (playBtn) {
+      playBtn.addEventListener('click', () => {
+        if (state.soundscapePlaying) {
+          stopSoundscape();
+          showToast('Acoustic atmosphere paused', 'info', 1500);
+        } else {
+          const tone = toneSelect ? toneSelect.value : state.soundscapeTone;
+          startSoundscape(tone);
+          const toneName = toneSelect ? toneSelect.options[toneSelect.selectedIndex].text : tone;
+          showToast(`Now Playing: ${toneName}`, 'success', 2500);
+        }
+      });
+    }
+
+    if (toneSelect) {
+      toneSelect.addEventListener('change', (e) => {
+        state.soundscapeTone = e.target.value;
+        if (state.soundscapePlaying) {
+          startSoundscape(state.soundscapeTone);
+        }
+      });
+    }
+
+    if (volInput) {
+      volInput.addEventListener('input', (e) => {
+        state.soundscapeVolume = parseFloat(e.target.value);
+        if (masterSoundGain && audioContext) {
+          masterSoundGain.gain.setValueAtTime(state.soundscapeVolume, audioContext.currentTime);
+        }
+      });
+    }
+
+    if (closeBtn && dock) {
+      closeBtn.addEventListener('click', () => {
+        stopSoundscape();
+        dock.style.display = 'none';
+        showToast('Acoustic Soundscape dock dismissed', 'info', 2000);
+      });
+    }
+
+    drawSoundVisualizerFlat();
+  }
+
+  // =========================================================================
   // MODAL 1: EVENT DETAILS DIALOG
   // =========================================================================
   function openEventDetailsModal(eventId) {
@@ -1519,7 +2432,21 @@
 
     const currentTier = event.tiers[draft.selectedTierIndex];
     const subtotal = currentTier.price * draft.quantity;
-    const total = subtotal + PLATFORM_FEE_INR;
+
+    // Dynamic Group Discount Engine: 3+ tickets = 5% Cultural Circle; 5+ tickets = 10% Royal Syndicate
+    let discountPercent = 0;
+    let discountLabel = '';
+    if (draft.quantity >= 5) {
+      discountPercent = 0.10;
+      discountLabel = 'Royal Syndicate Privilege (10% off)';
+    } else if (draft.quantity >= 3) {
+      discountPercent = 0.05;
+      discountLabel = 'Cultural Circle Privilege (5% off)';
+    }
+
+    draft.discountPercent = discountPercent;
+    draft.discountAmount = Math.round(subtotal * discountPercent);
+    const total = (subtotal - draft.discountAmount) + PLATFORM_FEE_INR;
 
     const summaryTierLabel = document.getElementById('summaryTierLabel');
     const summarySubtotal = document.getElementById('summarySubtotal');
@@ -1530,6 +2457,46 @@
     if (summarySubtotal) summarySubtotal.textContent = formatINR(subtotal);
     if (summaryFee) summaryFee.textContent = formatINR(PLATFORM_FEE_INR);
     if (summaryTotal) summaryTotal.textContent = formatINR(total);
+
+    // Update Group Discount line in summary
+    const discountRow = document.getElementById('summaryDiscountRow');
+    const discountLabelEl = document.getElementById('summaryDiscountLabel');
+    const discountValEl = document.getElementById('summaryDiscountVal');
+    if (discountRow) {
+      if (discountPercent > 0) {
+        discountRow.style.display = 'flex';
+        if (discountLabelEl) discountLabelEl.textContent = discountLabel;
+        if (discountValEl) discountValEl.textContent = `-₹${draft.discountAmount.toLocaleString('en-IN')}`;
+      } else {
+        discountRow.style.display = 'none';
+      }
+    }
+
+    // Interactive Seating Architecture Visualizer Sync
+    const visualizer = document.querySelector('.venue-visualizer-card');
+    if (visualizer) {
+      const zones = visualizer.querySelectorAll('.v-tier-zone');
+      zones.forEach(zone => {
+        const zoneIdx = Number(zone.getAttribute('data-tier-index'));
+        const isMatch = zoneIdx === draft.selectedTierIndex;
+        zone.classList.toggle('active', isMatch);
+
+        // Click zone to switch tier
+        zone.onclick = () => {
+          if (zoneIdx >= 0 && zoneIdx < event.tiers.length) {
+            draft.selectedTierIndex = zoneIdx;
+            updateBookingStage1UI();
+          }
+        };
+
+        zone.onkeydown = (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            zone.click();
+          }
+        };
+      });
+    }
   }
 
   function confirmBookingSubmission() {
@@ -1574,10 +2541,11 @@
 
     setTimeout(() => {
       const randomSuffix = Math.floor(10000 + Math.random() * 90000);
-      const bookingRef = `EVT-IN-2025-${randomSuffix}`;
+      const bookingRef = `EVT-IN-2026-${randomSuffix}`;
       const tier = event.tiers[draft.selectedTierIndex];
       const subtotal = tier.price * draft.quantity;
-      const total = subtotal + PLATFORM_FEE_INR;
+      const discountAmount = draft.discountAmount || 0;
+      const total = (subtotal - discountAmount) + PLATFORM_FEE_INR;
 
       const newBooking = {
         bookingId: 'BK-IN-' + Date.now().toString(36).toUpperCase(),
@@ -1594,6 +2562,8 @@
         tierPrice: tier.price,
         quantity: draft.quantity,
         subtotal: subtotal,
+        discountPercent: draft.discountPercent || 0,
+        discountAmount: discountAmount,
         fee: PLATFORM_FEE_INR,
         total: total,
         attendeeName: draft.attendeeName,
@@ -1746,7 +2716,7 @@
       };
     }
 
-    const sections = ['discover', 'categoriesSection', 'explore', 'saved', 'my-tickets'];
+    const sections = ['discover', 'categoriesSection', 'atlas', 'explore', 'bucket-list', 'saved', 'my-tickets'];
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY + 140;
       let currentSection = 'discover';
@@ -2009,6 +2979,9 @@
     renderEventsGrid();
     renderSavedEvents();
     renderMyTickets();
+    initCulturalAtlas();
+    initBucketList();
+    initSoundscapeSynthesizer();
     initMobileDrawer();
     initNavigation();
     setupEventListeners();
